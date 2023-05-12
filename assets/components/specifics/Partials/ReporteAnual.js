@@ -8,29 +8,42 @@ import {
   } from 'react-native'
 
 import DropdownSelect from 'react-native-input-select'
+import CalendarButton from '../../generals/CalendarButton'
+import { formatoMoney } from '../../../utils/conversiones'
 
 const ReporteAnual = (
     {
-        lineasNegocio,
-        lineaNegocio,
-        setLinea
+         //Lineas de negocio
+      lineasNegocio,
+      lineaNegocio,
+      setLinea,
+      //Clientes
+      clientes,
+      cliente,
+      setCliente,
+      totals,
+      //fecha
+      year,
+      setYear,
+      month,
+      setMonth
     }
 ) => 
 {
-  return (
-    <View style={styles.contenedorReporte}>
+return (
+ <View style={styles.contenedorReporte}>
     <View style={styles.contenedorTituloCalendar}>
       <Text style={styles.reporteText}>
          Reporte anual
       </Text>
-      
+      <CalendarButton type={'anual'} year={year} setYear={setYear} month={month} setMonth={setMonth} />
     </View>
-    <View>
+    <View style={{marginTop:10}}>
           <Text>Líneas de negocio</Text>
           <DropdownSelect   
             onValueChange={(itemValue) => setLinea(itemValue)}
             selectedValue={lineaNegocio}
-            placeholder="Linea de negocio"
+            placeholder="TODOS"
             dropdownStyle={{
               borderWidth: 0,
               borderColor:'black',
@@ -43,7 +56,7 @@ const ReporteAnual = (
               borderColor:'white'
             }}
             optionLabel={'name'}
-            optionValue={'code'}
+            optionValue={'id'}
             checkboxLabelStyle={{ color: 'black', fontSize: 15 }}
             options={lineasNegocio}
             listHeaderComponent={
@@ -60,9 +73,9 @@ const ReporteAnual = (
     <View>
           <Text>Cliente</Text>
           <DropdownSelect   
-            onValueChange={(itemValue) => setLinea(itemValue)}
-            selectedValue={lineaNegocio}
-            placeholder="Cliente"
+            onValueChange={(itemValue) => setCliente(itemValue)}
+            selectedValue={cliente}
+            placeholder="TODAS"
             dropdownStyle={{
               borderWidth: 0,
               borderColor:'black',
@@ -74,20 +87,62 @@ const ReporteAnual = (
               padding: 10,
               borderColor:'white'
             }}
-            optionLabel={'name'}
-            optionValue={'code'}
-            checkboxLabelStyle={{ color: 'black', fontSize: 30 }}
-            options={lineasNegocio}
+            optionLabel={'nombre'}
+            optionValue={'id'}
+            checkboxLabelStyle={{ color: 'black', fontSize: 15 }}
+            options={clientes}
             listHeaderComponent={
               <View style={{alignItems:'center'}}>
                 <Text style={{color:'black', fontSize:20}} >
-                  Lineas de negocio disponibles
+                 Clientes disponibles
                 </Text>
                
               </View>
             }  
             >
           </DropdownSelect>
+       </View>
+       <View style={styles.contenedorCantidades}>
+         <View>
+           <View style={[styles.contenedorCantidad, styles.ventas]}>
+              <Text style={{color:'white', textTransform:'uppercase'}}>Ventas</Text>
+              {
+                totals !== undefined ?
+                <Text style={{color:'white',marginLeft:-10, fontWeight:'bold', fontSize:14}}>${formatoMoney(totals.ventas.toFixed(2))}</Text>
+                :
+                null
+              }
+           </View>
+           <View style={[styles.contenedorCantidad, styles.pagar]}>
+             <Text style={{color:'white', textTransform:'uppercase'}}>Por pagar</Text>
+              {
+                totals !== null ?
+                <Text style={{color:'white',marginLeft:-10, fontWeight:'bold', fontSize:14}}>${formatoMoney(totals.pp.toFixed(2))}</Text>
+                :
+                null
+              }
+           </View>
+         </View>
+        <View>
+           <View style={[styles.contenedorCantidad, styles.cobrar]}>
+             <Text style={{color:'white', textTransform:'uppercase'}}>Por cobrar</Text>
+             {
+                totals !== null ?
+                <Text style={{color:'white',marginLeft:-10, fontWeight:'bold', fontSize:14}}>${formatoMoney(totals.pc.toFixed(2))}</Text>
+                :
+                null
+              }
+           </View>
+           <View style={[styles.contenedorCantidad, styles.cobrado]}>
+             <Text style={{color:'white', textTransform:'uppercase'}}>Cobrado</Text>
+             {
+                totals !== null ?
+                <Text style={{color:'white',marginLeft:-10, fontWeight:'bold', fontSize:14}}>${formatoMoney(totals.c.toFixed(2))}</Text>
+                :
+                null
+              }
+           </View>
+          </View>
        </View>
   </View>
   )
@@ -98,16 +153,44 @@ const styles = StyleSheet.create({
       backgroundColor:'white',
       borderRadius:10,
       margin:10,
-      padding:16
+      padding:20, 
+      height:420
     },
     contenedorTituloCalendar:
     {
       flexDirection:'row',
+      justifyContent:'space-between'
     },
     reporteText:{
       fontSize:20,
       color:'black',
-      marginRight:140
+
+    },
+    contenedorCantidades:
+    {
+      flexDirection:'row',
+      marginTop:-18
+    },
+    contenedorCantidad:{
+      paddingVertical:15,
+      paddingHorizontal:30,
+      margin:5,
+      borderRadius:10,
+      width:150
+    },
+    ventas:
+    {
+      backgroundColor:'#44BFFC',
+    },
+    cobrar:{
+      backgroundColor:'#697FEA'
+    },
+    pagar:
+    {
+      backgroundColor:'#B66BF5'
+    },
+    cobrado:{
+      backgroundColor:'#56D0C1'
     }
   })
   

@@ -7,7 +7,8 @@ import {
     Image,
     Animated
   } from 'react-native'
-
+import CalendarTotals from '../specifics/CalendarTotals';
+import SectionVentas from '../specifics/SectionVentas';
 
 const DropDownItem = (
     {
@@ -22,52 +23,79 @@ const DropDownItem = (
 
   useEffect(() => 
   {
+    //console.log(show)
      if(show) //mostramos
      {
-       Animated.spring(
+       Animated.timing(
         animacion,{
-            toValue:50,
+            toValue:500,
+            duration:100,
             useNativeDriver:false
         }
        ).start()
      }
-     else //ocultamos
+     if(!show) //ocultamos
      {
-       Animated.spring(
+       Animated.timing(
         animacion, {
             toValue:0,
+            duration:100,
             useNativeDriver:false
         }
        ).start()
      } 
  },[show])
 
- const stylesToMostrar = {
-    width:animacion,
-    heigth:animacion
- }
-
-  const icons = [
-    {calendar:'../../img/calendario_icon.png'},
-    {money:'../../img/monedas_icon.png'},
-    {pago:'../../img/pago_icon.png'},
-    {dowm:'../../img/down_icon.png'}
-  ]
-
-  const icontemp = '../../img/calendario_icon.png'
 
   return (
     <Pressable style={styles.contenedor} onPress={() => {setShow(!show)}}>
       <View style={styles.headerCard}>
          <Text style={styles.titulo}>
-            {title}
+            {title} 
          </Text>
-         <Image source={require(icontemp)} />
+        {icon === 'calendar' ? 
+         <Image source={require('../../img/calendario_icon.png')} />
+         :
+         null
+        }
+        {icon === 'deposito' ? 
+         <Image source={require('../../img/icon_deposito.png')} />
+         :
+         null
+        }
+        {icon === 'monedas' ? 
+         <Image source={require('../../img/monedas_icon.png')} />
+         :
+         null
+        }
+        {icon === 'pago' ? 
+         <Image source={require('../../img/pago_icon.png')} />
+         :
+         null
+        }
       </View>
-      <View style={[styles.contenido, stylesToMostrar]}>
-
-      </View>
+      <Animated.View style={[styles.contenido, {height:animacion} ]}>
+         {
+          title === 'Calendario' ? 
+            <Animated.View style={{height:animacion}}>
+                <CalendarTotals show={show} />
+            </Animated.View>
+          :
+          null
+         }
+         {
+          title === 'Ventas' ? 
+            <Animated.View style={{height:animacion}}>
+               <Text>
+                 <SectionVentas />
+               </Text>
+            </Animated.View>
+          :
+          null
+         }
+      </Animated.View>
     </Pressable>
+
   )
 }
 
@@ -77,20 +105,20 @@ const styles = StyleSheet.create({
       backgroundColor:'white',
       borderRadius:10,
       margin:10,
-      padding:16
+      padding:16,
     },
     titulo:{
-        fontSize:20,
-        color:'black'
+        fontSize:25,
+        color:'black',
     },
     headerCard:{
-       flexDirection:'row',    
+       flexDirection:'row',  
+       justifyContent:'space-between'  
     },
     contenido:
     {
-        
-    }
 
+    }
 })
 
 export default DropDownItem
