@@ -13,7 +13,9 @@ import SectionVentas from '../specifics/SectionVentas';
 const DropDownItem = (
     {
         title,
-        icon
+        icon,
+        dataCalendar,
+        setDateCalendar
     }
 ) => {
 
@@ -28,7 +30,7 @@ const DropDownItem = (
      {
        Animated.timing(
         animacion,{
-            toValue:500,
+            toValue:650,
             duration:100,
             useNativeDriver:false
         }
@@ -78,7 +80,7 @@ const DropDownItem = (
          {
           title === 'Calendario' ? 
             <Animated.View style={{height:animacion}}>
-                <CalendarTotals show={show} />
+                <CalendarTotals show={show} dataCalendar={dataCalendar} setDateCalendar={setDateCalendar} />
             </Animated.View>
           :
           null
