@@ -8,7 +8,9 @@ import {
   Text,
   View,
   ScrollView,
-  Pressable
+  Pressable,
+  SafeAreaView,
+  FlatList
 } from 'react-native'
 import Reportes from '../components/specifics/Reportes'
 import DropDownItem from '../components/generals/DropDownItem'
@@ -134,7 +136,7 @@ const Finanzas = (
         }
       }).then(response => 
         {
-          console.log(response);
+          //console.log(response);
           let objectGlobal = {};
           for (let index = 0; index < response.data.ventas.length; index++)  //seteamos las ventas
           {
@@ -143,6 +145,7 @@ const Finanzas = (
             objectGlobal[`${venta.fechaInicial}`] =  
             {
               marked:true,
+              selected:false,
               dots:[ventas]
             } 
           }
@@ -195,7 +198,7 @@ const Finanzas = (
         for (let index4 = 0; index4 < response.data.c.length; index4++)
         {
           const cTemp = response.data.c[index4];
-          console.log(cTemp.created_at.substring(0,10))
+          //console.log(cTemp.created_at.substring(0,10))
           for(let fecha in objectGlobal)
           {
             //console.log(fecha)
@@ -247,33 +250,71 @@ const Finanzas = (
     {
       consultaCalendario(dateCalendar)
     },[dateCalendar])
-     
-  return (
-    <ScrollView style={styles.contenedor}>
+    
+  const sections = [
+    {id:0, nombre: 'reportes'},
+    {id:1, nombre:'calendar'},
+    {id:2, nombre:'ventas'},
+    {id:3, nombre:'pp'},
+    {id:4, nombre:'depositos'}
+  ]
 
-       <View style={styles.contenedorReportes}>
-         <Text style={styles.textFinanzas}>
-           Finanzas
-         </Text>
-         <Reportes lineasNegocio={lineasNegocio} 
-                 lineaNegocio={lineaNegocio} 
-                 setLinea={setLinea}
-                 clientes={clientes}
-                 cliente={cliente}
-                 setCliente={setCliente} 
-                 totals={totals}
-                 totalsMensual={totalsMensual}
-                 year={year}
-                 setYear={setYear}
-                 month={month}
-                 setMonth={setMonth}
-                 />
-       </View>
-       <DropDownItem title={'Calendario'} icon={'calendar'} dataCalendar={dataCalendar} setDateCalendar={setDateCalendar} />
-       <DropDownItem title={'Ventas'} icon={'monedas'} />
-       <DropDownItem title={'Por Pagar'} icon={'pago'} />
-       <DropDownItem title={'Depositos'} icon={'deposito'} />
-    </ScrollView>
+  return (
+    <SafeAreaView>
+        <FlatList
+          data={sections}
+          keyExtractor={(item) => item.id }
+          renderItem={({item}) => 
+         {
+           return (
+            <View style={{marginVertical:15}}>
+               {
+                item.nombre == 'reportes' ?
+                <View style={styles.contenedorReportes}>
+                   <Text style={styles.textFinanzas}>
+                     Finanzas
+                   </Text>
+                   <Reportes lineasNegocio={lineasNegocio} 
+                           lineaNegocio={lineaNegocio} 
+                           setLinea={setLinea}
+                           clientes={clientes}
+                           cliente={cliente}
+                           setCliente={setCliente} 
+                           totals={totals}
+                           totalsMensual={totalsMensual}
+                           year={year}
+                           setYear={setYear}
+                           month={month}
+                           setMonth={setMonth}
+                           />
+                 </View> 
+                : null
+               }
+               {
+                  item.nombre == 'calendar' ?
+                    <DropDownItem title={'Calendario'} icon={'calendar'} dataCalendar={dataCalendar} setDateCalendar={setDateCalendar} />
+                  : null
+               }
+               {
+                  item.nombre == 'ventas' ?
+                    <DropDownItem title={'Ventas'} icon={'monedas'} lineasNegocio={lineasNegocio} />
+                  : null
+               }
+{
+                  item.nombre == 'pp' ?
+                     <DropDownItem title={'Por Pagar'} icon={'pago'} />
+                  : null
+               }
+               {
+                  item.nombre == 'depositos' ?
+                    <DropDownItem title={'Depositos'} icon={'deposito'} />
+                  : null
+               }
+            </View>
+           )
+         }}
+         />
+    </SafeAreaView>
   )
 }
 

@@ -6,7 +6,11 @@ import {
    StyleSheet
 } from 'react-native'
 
-const Buscador = () => {
+const Buscador = (
+   {
+      padding,
+   }
+) => {
   return (
      <View>
         <View style={styles.contenedorBuscador}>
@@ -14,7 +18,7 @@ const Buscador = () => {
           <TextInput
            placeholder='Buscar'
            placeholderTextColor={'#9B9B9B'}
-           style={styles.input}
+           style={styles.input }
             />
         </View>
      </View>
@@ -38,11 +42,11 @@ const styles =  StyleSheet.create({
     },
     input:
     {
-        backgroundColor:'#F2F2F2',
-        borderRadius:10,
-        paddingHorizontal:110,
-        textAlign:'left'
-    },
+      backgroundColor:'#F2F2F2',
+      borderRadius:10,
+      textAlign:'left',
+      paddingHorizontal:150
+    }
 })
 
 export default Buscador

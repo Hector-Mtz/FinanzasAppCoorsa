@@ -80,7 +80,8 @@ const CalendarTotals = (
         for (let index4 = 0; index4 < response.data.c.length; index4++)
          {
           const c = response.data.c[index4];
-          sumC += c.cantidad     
+          //console.log(c)
+          sumC += c.total     
         }
 
         for (let index5 = 0; index5 < response.data.notas.length; index5++)
@@ -97,6 +98,7 @@ const CalendarTotals = (
       })  
   }
   
+  const [change, setChange] = useState(true)
 
   return (
     <View>
@@ -108,7 +110,20 @@ const CalendarTotals = (
                  onDayPress={day => 
                 {
                   //console.log('selected day', day);
+                  let fechaAnterior = {};
                   setSelected(day.dateString)
+                  fechaAnterior = dataCalendar[day.dateString]
+                  if(fechaAnterior == undefined)
+                  {
+                    return null;
+                  }
+                  else
+                  {
+                    setChange(!change)
+                     console.log(change)
+                      fechaAnterior.selected = change
+                  }
+                                    
                   //console.log(day.dateString)
                 }}
                onMonthChange={month => 
@@ -117,6 +132,7 @@ const CalendarTotals = (
                 }
                }
                markingType='multi-dot'
+           
             />
               {
                 selected !== '' ?
@@ -132,7 +148,7 @@ const CalendarTotals = (
                            <Text style={styles.indicator}>V</Text>
                            <View style={[styles.span, colors.ventas]}></View>
                            <View style={{marginLeft:90}}>
-                             <Text> $ {formatoMoney(ventaShow)} </Text>
+                             <Text style={{color:'#C6C6C6'}}> $ {formatoMoney(ventaShow)} </Text>
                            </View>
                          </View>
                       </View>
@@ -141,7 +157,7 @@ const CalendarTotals = (
                            <Text style={styles.indicator}>PC</Text>
                            <View style={[styles.span, colors.pc]}></View>
                            <View style={{marginLeft:70}}>
-                             <Text> $ {formatoMoney(pcShow)} </Text>
+                             <Text style={{color:'#C6C6C6'}}> $ {formatoMoney(pcShow)} </Text>
                            </View>
                          </View>
                       </View>
@@ -150,7 +166,7 @@ const CalendarTotals = (
                            <Text style={styles.indicator}>PP</Text>
                            <View style={[styles.span, colors.pp]}></View>
                            <View style={{marginLeft:70}}>
-                             <Text> $ {formatoMoney(ppShow)} </Text>
+                             <Text style={{color:'#C6C6C6'}}> $ {formatoMoney(ppShow)} </Text>
                            </View>
                          </View>
                       </View>
@@ -159,7 +175,7 @@ const CalendarTotals = (
                            <Text style={styles.indicator}>C</Text>
                            <View style={[styles.span, colors.c]}></View>
                            <View style={{marginLeft:90}}>
-                             <Text> $ {formatoMoney(cShow)} </Text>
+                             <Text style={{color:'#C6C6C6'}}> $ {formatoMoney(cShow)} </Text>
                            </View>
                          </View>
                       </View>
@@ -168,7 +184,7 @@ const CalendarTotals = (
                            <Text style={styles.indicator}>D</Text>
                            <View style={[styles.span, colors.n]}></View>
                            <View style={{marginLeft:90}}>
-                             <Text> $ {formatoMoney(notashow)} </Text>
+                             <Text style={{color:'#C6C6C6'}}> $ {formatoMoney(notashow)} </Text>
                            </View>
                          </View>
                       </View>

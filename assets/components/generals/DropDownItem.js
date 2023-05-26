@@ -15,7 +15,8 @@ const DropDownItem = (
         title,
         icon,
         dataCalendar,
-        setDateCalendar
+        setDateCalendar,
+        lineasNegocio
     }
 ) => {
 
@@ -30,7 +31,7 @@ const DropDownItem = (
      {
        Animated.timing(
         animacion,{
-            toValue:650,
+            toValue:750,
             duration:100,
             useNativeDriver:false
         }
@@ -88,9 +89,11 @@ const DropDownItem = (
          {
           title === 'Ventas' ? 
             <Animated.View style={{height:animacion}}>
-               <Text>
-                 <SectionVentas />
-               </Text>
+                 {
+                  show ?
+                  <SectionVentas show={show} lineasNegocio={lineasNegocio} />
+                  : null
+                 }
             </Animated.View>
           :
           null
