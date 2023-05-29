@@ -9,6 +9,7 @@ import {
   } from 'react-native'
 import CalendarTotals from '../specifics/CalendarTotals';
 import SectionVentas from '../specifics/SectionVentas';
+import SectionPorPagar from '../specifics/SectionPorPagar';
 
 const DropDownItem = (
     {
@@ -31,7 +32,7 @@ const DropDownItem = (
      {
        Animated.timing(
         animacion,{
-            toValue:750,
+            toValue:1000,
             duration:100,
             useNativeDriver:false
         }
@@ -92,6 +93,18 @@ const DropDownItem = (
                  {
                   show ?
                   <SectionVentas show={show} lineasNegocio={lineasNegocio} />
+                  : null
+                 }
+            </Animated.View>
+          :
+          null
+         }
+         {
+          title === 'Por Pagar' ? 
+            <Animated.View style={{height:animacion}}>
+                 {
+                  show ?
+                    <SectionPorPagar />
                   : null
                  }
             </Animated.View>

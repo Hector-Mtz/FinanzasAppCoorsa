@@ -18,12 +18,9 @@ import SwitchButtons from '../generals/SwitchButtons'
 import DropDownClient from '../generals/DropDownClient'
 import axios from 'axios'
 import { formatoMoney } from '../../utils/conversiones'
-
-
 const SectionVentas = 
 (
-  show,
-  lineasNegocio
+  show
 ) => {
 
    //Consulta
@@ -40,9 +37,30 @@ const SectionVentas =
           console.error(err);
       });
    }
+
   //Seteo de clientes
   const [clientes, setClientes] = useState([{id:0, nombre:'DHL'}]);
   const [total, setTotal] = useState(0);
+  const [lineasNegocio, setLineasNegocio] = useState([]);
+
+   //Peticiones
+   useEffect(() =>  //al menos tiene que ejecutarse una vez
+   {
+     const lineasNegocioConsulta = async () => 
+     {
+        await axios.get('https://finanzas.coorsamexico.com/api/getLineasNegocio')
+        .then(response => {
+            // Handle response
+            //console.log(response.data);
+            setLineasNegocio(response.data)
+        })
+        .catch(err => {
+            // Handle errors
+            console.error(err);
+        });
+     }
+     lineasNegocioConsulta()
+   },[])
 
   useEffect(() => 
   {
@@ -54,11 +72,17 @@ const SectionVentas =
 
   //Variables de filtros
   const [dateInicio, setDateInicio] = useState(new Date());
-  const [dateInicioShow, setDateInicioShow] = useState('');
+  const [dateInicioShow, setDateInicioShow] = useState(''); //se va para consulta
   const [dateFin, setDateFin] = useState(new Date());
-  const [dateFinShow, setDateFinShow] = useState('');
+  const [dateFinShow, setDateFinShow] = useState(''); //se va para consulta
   const [open, setOpen] = useState(false);
-  const [lineaNegocio, setLinea] = useState('');
+  const [lineaNegocio, setLinea] = useState(''); //se va para consulta
+  const [busqueda, setBusqueda] = useState('');
+
+  useEffect(() => 
+  {
+    
+  },[busqueda])
 
   useEffect(() => 
   {
@@ -68,19 +92,18 @@ const SectionVentas =
     setDateFinShow(newFechaFin)
   },[dateInicio, dateFin])
 
+ 
 
   return (
     <View style={styles.contenedor}>
     {
       show ? 
        <View>
-         <View style={styles.header}>
-           <View >
-            <Buscador />
-           </View>
+         <View style={{flexDirection:'row', alignItems:'center', alignSelf:'center'}} >
+            <Buscador busqueda={busqueda} setBusqueda={setBusqueda} />
          </View>
-          <View style={{flexDirection:'row', marginTop:7}}>
-          <View style={{marginHorizontal:10}}>
+          <View style={{flexDirection:'row', marginTop:7, alignSelf:'center'}}>
+          <View style={{marginHorizontal:5}}>
               <Text style={{color:'black', marginBottom:5}}>
                 Inicio
               </Text>
@@ -106,7 +129,7 @@ const SectionVentas =
                        setOpen(false)
                 }} />
           </View>
-          <View style={{marginHorizontal:10}}>
+          <View style={{marginHorizontal:5}}>
               <Text style={{color:'black', marginBottom:5}}>
                 Fin
               </Text>
@@ -152,7 +175,7 @@ const SectionVentas =
                   padding: 5,
                   borderColor:'white'
                 }}
-                options={lineasNegocio.lineasNegocio}
+                options={lineasNegocio}
                 optionLabel={'name'}
                 optionValue={'id'}
                 checkboxLabelStyle={{ color: 'black', fontSize: 15 }}
@@ -168,16 +191,19 @@ const SectionVentas =
               </DropdownSelect>
           </View>
           <View>
-            <SwitchButtons />
-            <View style={{marginTop:10}}>
+            <View style={{alignSelf:'center', justifyContent:'center', alignContent:'center'}}>
+              <SwitchButtons />
+            </View>
+            <View style={{marginTop:20}}>
                <FlatList 
                  scrollEnabled
                  data={clientes}
                  keyExtractor={(item) => item.id }
                  renderItem={({item}) => 
+                 
                 {
                   return (
-                    <DropDownClient item={item}  />
+                    <DropDownClient item={item} type={'Ventas'} />
                   )
                 }}
                />
@@ -192,6 +218,7 @@ const SectionVentas =
        </View>
       : null
     }
+
   </View>
   )
 }
@@ -201,11 +228,6 @@ const styles = StyleSheet.create(
        contenedor:
        {
          marginTop:15
-       },
-       header:
-       {
-        flexDirection:'row',
-        justifyContent:'space-between',
        },
        buttonCalendar:
        {

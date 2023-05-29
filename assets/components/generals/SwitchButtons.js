@@ -17,7 +17,7 @@ const SwitchButtons = () =>
     {
         case 1:
             Animated.timing(animacion,{
-                toValue:-105,
+                toValue:-118,
                 duration:100,
                 useNativeDriver:false
                }).start()
@@ -26,7 +26,7 @@ const SwitchButtons = () =>
     
         case 2:
             Animated.timing(animacion,{
-                toValue:-10,
+                toValue:-12,
                 duration:100,
                 useNativeDriver:false
                }).start()
@@ -34,14 +34,14 @@ const SwitchButtons = () =>
         
         case 3:
             Animated.timing(animacion,{
-                toValue:94,
+                toValue:106,
                 duration:100,
                 useNativeDriver:false
                }).start()
             break;
     }
     
-   console.log(slide)
+   //console.log(slide)
  },[slide])
 
  const estiloAnimacion = {
@@ -101,7 +101,7 @@ const styles = StyleSheet.create(
         },
         item_slide:
         {
-          marginHorizontal:20
+          marginHorizontal:25
         },
         text:
         {

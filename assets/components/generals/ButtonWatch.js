@@ -1,9 +1,18 @@
 import React from 'react'
 import { Image, Pressable, StyleSheet } from 'react-native'
 
-const ButtonWatch = () => {
+const ButtonWatch = (
+  modalPorPagar,
+  setModalPorpagar,
+  ItemAMostrar,
+  id
+) => {
+  //console.log(modalPorPagar)
   return (
-    <Pressable style={styles.button}>
+    <Pressable style={styles.button} onPress={() => {
+     modalPorPagar.setItemAMostrar(modalPorPagar.id)
+     modalPorPagar.setModalPorpagar(true)
+    }}>
        <Image source={require('../../img/eye.png')} />
     </Pressable>
   )
