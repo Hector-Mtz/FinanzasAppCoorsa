@@ -4,6 +4,8 @@ import axios from 'axios'
 import ButtonWatch from './ButtonWatch';
 import ModalVentasPorPagar from './ModalVentasPorPagar';
 import ModalFacturas from '../specifics/Partials/ModalFacturas';
+import { formatoMoney } from '../../utils/conversiones';
+import ModalDepositos from '../specifics/Partials/ModalDepositos';
 const DropDownClient = (
   item,
   type
@@ -23,14 +25,14 @@ const DropDownClient = (
   }
   if(item.type == 'Depositos')
   {
-
+     total = item.item.total_ingresos
   }
 
   let id = item.item.id;
   const [show, setShow] = useState(false);
   const [ventas, setVentas] = useState(null); //variable para almacenar las ventas
   const [facturas, setFacturas] = useState(null);
-  const [depositos, setDepositos] = useState(null);
+  const [depositos, setDepositos] = useState(null); //debe ser seteado en null
   const [animacion] = useState(new Animated.Value(0)) 
 
   useEffect(() => 
@@ -113,7 +115,29 @@ const DropDownClient = (
 
     if(item.type == 'Depositos')
     {
-
+      await axios.get("http://127.0.0.1:8000/api/ingresoByClienteApi",
+      {
+        params:{
+          cliente_id:id
+        } //aqui van los parametros como linea de negocio, etc para filtrar
+      })
+      .then(response => {
+          // Handle response
+          //console.log(response.data);
+          if(facturas == null )
+          {
+            setDepositos(response.data)
+            setShowIndicator(false)
+          }
+          else
+          {
+            setDepositos(null)
+          }
+      })
+      .catch(err => {
+          // Handle errors)
+          console.error(err);
+      });
     }
   }
 
@@ -137,7 +161,7 @@ const DropDownClient = (
         }
         if(item.type == 'Depositos')
         {
-
+            setDepositos(response.data)
         }
     })
     .catch(err => {
@@ -149,7 +173,8 @@ const DropDownClient = (
   //Variables para los modales
   const [modalPorPagar, setModalPorpagar] = useState(false);
   const [modalFacturas, setModalFacturas] = useState(false);
-  const [ItemAMostrar, setItemAMostrar] = useState(1591);
+  const [modalDepositos, setModalDepositos] = useState(false);
+  const [ItemAMostrar, setItemAMostrar] = useState(0);
 
   return (
     <View >
@@ -346,7 +371,81 @@ const DropDownClient = (
                    {
                      depositos !== null ?
                      <View>
-                        
+                           <FlatList 
+                            scrollEnabled
+                            data={depositos.data}
+                            keyExtractor={(item) => item.id }
+                            renderItem={({item}) => 
+                           {
+                             return (
+                              <View style={style.contenedorItemClient}>
+                                  <Text style={{color:'black'}}>
+                                    #{item.nombre}
+                                   </Text>
+                                   <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:6}}> 
+                                      <Text style={{color:'black'}}>Cantidad: ${formatoMoney(item.cantidad.toFixed(2))}</Text>
+                                      <View>
+                                        <ButtonWatch itemType={itemType} modalPorPagar={modalPorPagar} setModalDepositos={setModalDepositos} setItemAMostrar={setItemAMostrar} id={item.id} />
+                                      </View>
+                                      {
+                                        ItemAMostrar === item.id ?
+                                        <View>
+                                            <ModalDepositos modalDepositos={modalDepositos} setModalDepositos={setModalDepositos} item={item} />
+                                        </View>
+                                        : null
+                                      }
+                                   </View>
+                              </View>   
+                             )
+                           }}
+                        />               
+                        <View style={{flexDirection:'row'}}>
+                            <View style={{flexDirection:'row', alignItems:'center'}}>
+                              {
+                                depositos.current_page == 1 ?
+                                 <View style={{flexDirection:'row', alignItems:'center'}}>
+                                   <View style = {{ marginHorizontal:6}} >
+                                    <Image style={[style.arrow, {opacity:0.5}]} source={require('../../img/double_arrow_left_gray.png')} />
+                                  </View>
+                                  <View>
+                                      <Image style={[style.arrow, {opacity:0.5}]} source={require('../../img/arrow_gray.png')} />
+                                  </View>
+                                 </View>
+                                :
+                                 <View style={{flexDirection:'row', alignItems:'center'}}>
+                                   <Pressable style = {{ marginHorizontal:6}}  onPress={() => {
+                                      changePage(depositos.first_page_url)
+                                   }}>
+                                    <Image style={style.arrow} source={require('../../img/double_arrow_left_gray.png')} />
+                                  </Pressable>
+                                   <Pressable onPress={() => {
+                                      changePage(depositos.prev_page_url)
+                                     }} >
+                                       <Image style={style.arrow} source={require('../../img/arrow_gray.png')} />
+                                   </Pressable>
+                                 </View>
+                              }
+                            </View>
+                            <View style={{width:25, alignItems:'center', borderWidth:0.5 , borderColor:'#C3C3C3', marginHorizontal:5}}>
+                              <Text style={{color:'black'}} >{JSON.stringify(depositos.current_page)}</Text>
+                            </View>
+                             <Text style={{color:'black'}}>
+                                 de 
+                                 <Text> {depositos.last_page}</Text>
+                              </Text>
+                            <View style={{flexDirection:'row', alignItems:'center' }}>
+                               <Pressable style = {{ marginHorizontal:6}}  onPress={() => {
+                                  changePage(depositos.next_page_url)
+                               }}>
+                                  <Image  style={style.arrow}  source={require('../../img/arrow_right_gray.png')} />
+                               </Pressable>
+                               <Pressable onPress={() => {
+                                  changePage(depositos.last_page_url)
+                                }}>
+                                  <Image style={style.arrow} source={require('../../img/double_arrow_right_gray.png')} />
+                               </Pressable>
+                            </View>
+                        </View>
                      </View>
                      :
                      <View>

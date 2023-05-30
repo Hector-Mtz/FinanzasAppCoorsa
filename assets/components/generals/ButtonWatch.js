@@ -7,7 +7,8 @@ const ButtonWatch = (
   ItemAMostrar,
   id,
   itemType,
-  setModalFacturas
+  setModalFacturas,
+  setModalDepositos
 ) => {
   //console.log(modalPorPagar)
   return (
@@ -22,6 +23,12 @@ const ButtonWatch = (
       {
          modalPorPagar.setItemAMostrar(modalPorPagar.id)
          modalPorPagar.setModalFacturas(true)
+      }
+      if(modalPorPagar.itemType === 'Depositos')
+      {
+         console.log(modalPorPagar)
+         modalPorPagar.setItemAMostrar(modalPorPagar.id)
+         modalPorPagar.setModalDepositos(true)
       }
     }}>
        <Image source={require('../../img/eye.png')} />
