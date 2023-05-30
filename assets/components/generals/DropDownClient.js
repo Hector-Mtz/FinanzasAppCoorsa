@@ -3,6 +3,7 @@ import { Pressable, View, Text, StyleSheet, Image, Animated,FlatList, ActivityIn
 import axios from 'axios'
 import ButtonWatch from './ButtonWatch';
 import ModalVentasPorPagar from './ModalVentasPorPagar';
+import ModalFacturas from '../specifics/Partials/ModalFacturas';
 const DropDownClient = (
   item,
   type
@@ -10,6 +11,7 @@ const DropDownClient = (
  {
   let nombre = item.item.nombre;
   let total = 0;
+  const [itemType, setItemType] = useState(item.type);
   if(item.type == 'Ventas')
   {
     total =  item.item.total_ventas
@@ -19,10 +21,16 @@ const DropDownClient = (
     //console.log(item.item.total_facturas)
     total = item.item.total_facturas
   }
+  if(item.type == 'Depositos')
+  {
+
+  }
+
   let id = item.item.id;
   const [show, setShow] = useState(false);
   const [ventas, setVentas] = useState(null); //variable para almacenar las ventas
   const [facturas, setFacturas] = useState(null);
+  const [depositos, setDepositos] = useState(null);
   const [animacion] = useState(new Animated.Value(0)) 
 
   useEffect(() => 
@@ -53,6 +61,7 @@ const DropDownClient = (
   const [showIndicator,setShowIndicator] = useState(false) 
   const desplegar = async (id) => 
   {
+    console.log(id)
     setShowIndicator(true)
     setShow(!show)
     //Si son ventas
@@ -97,9 +106,14 @@ const DropDownClient = (
           }
       })
       .catch(err => {
-          // Handle errors
+          // Handle errors)
           console.error(err);
       });
+    }
+
+    if(item.type == 'Depositos')
+    {
+
     }
   }
 
@@ -121,6 +135,10 @@ const DropDownClient = (
         {
            setFacturas(response.data)
         }
+        if(item.type == 'Depositos')
+        {
+
+        }
     })
     .catch(err => {
         // Handle errors
@@ -128,7 +146,9 @@ const DropDownClient = (
     });
   }
 
+  //Variables para los modales
   const [modalPorPagar, setModalPorpagar] = useState(false);
+  const [modalFacturas, setModalFacturas] = useState(false);
   const [ItemAMostrar, setItemAMostrar] = useState(1591);
 
   return (
@@ -170,7 +190,7 @@ const DropDownClient = (
                                </Text>
                               <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                                  <Text style={{color:'black'}}>{item.fechaInicial}</Text>
-                                 <ButtonWatch modalPorPagar={modalPorPagar} setModalPorpagar={setModalPorpagar} setItemAMostrar={setItemAMostrar} id={item.id} />
+                                 <ButtonWatch itemType={itemType} modalPorPagar={modalPorPagar} setModalPorpagar={setModalPorpagar} setItemAMostrar={setItemAMostrar} id={item.id} />
                               </View>
                               {
                                 ItemAMostrar === item.id ?
@@ -253,8 +273,13 @@ const DropDownClient = (
                          <View style={style.contenedorItemClient}>
                             <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                               <Text style={{color:'black',textTransform:'uppercase'}} >#{item.referencia}</Text>
-                              <ButtonWatch />
+                              <ButtonWatch itemType={itemType} modalPorPagar={modalPorPagar}  setModalFacturas={setModalFacturas} setItemAMostrar={setItemAMostrar} id={item.id} />
                             </View>
+                            {
+                               ItemAMostrar === item.id ?
+                                 <ModalFacturas modalFacturas={modalFacturas} setModalFacturas={setModalFacturas} item={item} />
+                              : null
+                            }
                          </View>   
                         )
                       }}
@@ -314,6 +339,23 @@ const DropDownClient = (
                    }
                 </View>
                 : null
+              }
+              {
+                 item.type == 'Depositos' ?
+                 <View>
+                   {
+                     depositos !== null ?
+                     <View>
+                        
+                     </View>
+                     :
+                     <View>
+                       <Text>No hay registros</Text>
+                     </View>
+                   }
+                 </View>
+                 :
+                 null
               }
             </View>
           :null

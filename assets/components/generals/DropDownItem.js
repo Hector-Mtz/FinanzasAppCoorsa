@@ -10,6 +10,7 @@ import {
 import CalendarTotals from '../specifics/CalendarTotals';
 import SectionVentas from '../specifics/SectionVentas';
 import SectionPorPagar from '../specifics/SectionPorPagar';
+import SectionDepositos from '../specifics/SectionDepositos';
 
 const DropDownItem = (
     {
@@ -105,6 +106,18 @@ const DropDownItem = (
                  {
                   show ?
                     <SectionPorPagar />
+                  : null
+                 }
+            </Animated.View>
+          :
+          null
+         }
+         {
+          title === 'Depositos' ? 
+            <Animated.View style={{height:animacion}}>
+                 {
+                  show ?
+                    <SectionDepositos />
                   : null
                  }
             </Animated.View>
