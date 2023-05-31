@@ -23,10 +23,29 @@ const SectionVentas =
   show
 ) => {
 
+    //Variables de filtros
+    const [dateInicio, setDateInicio] = useState(new Date());
+    const [dateInicioShow, setDateInicioShow] = useState(''); //se va para consulta
+    const [dateFin, setDateFin] = useState(new Date());
+    const [dateFinShow, setDateFinShow] = useState(''); //se va para consulta
+    const [open, setOpen] = useState(false);
+    const [open2, setOpen2] = useState(false);
+    const [lineaNegocio, setLinea] = useState(''); //se va para consulta
+    const [busqueda, setBusqueda] = useState('');
+    const [slide, setSlide] = useState(0);  //se va para consulta
+
+      //Seteo de clientes
+    const [clientes, setClientes] = useState([{id:0, nombre:'DHL'}]);
+    const [total, setTotal] = useState(0);
+    const [lineasNegocio, setLineasNegocio] = useState([{id:0, name:'TODAS'}]);
+
    //Consulta
-   const totales = async () => 
+   const totales = async (busqueda, fechaInicio, fechaFinal, lineaNegocio, status) => 
    {
-      await axios.get('https://finanzas.coorsamexico.com/api/getTotalsItems')
+      //console.log([busqueda, fechaInicio, fechaFinal, lineaNegocio, status])
+      await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/getTotalsItems', {
+
+      })
       .then(response => {
           setClientes(response.data.clientes)
           setTotal(response.data.totalVentasStatus[0].total)
@@ -38,17 +57,18 @@ const SectionVentas =
       });
    }
 
-  //Seteo de clientes
-  const [clientes, setClientes] = useState([{id:0, nombre:'DHL'}]);
-  const [total, setTotal] = useState(0);
-  const [lineasNegocio, setLineasNegocio] = useState([]);
+   useEffect(() => 
+   {
+      totales(busqueda, dateInicioShow, dateFinShow, lineaNegocio, slide)
+   },[busqueda, dateInicioShow, dateFinShow,lineaNegocio, slide ])
+
 
    //Peticiones
    useEffect(() =>  //al menos tiene que ejecutarse una vez
    {
      const lineasNegocioConsulta = async () => 
      {
-        await axios.get('https://finanzas.coorsamexico.com/api/getLineasNegocio')
+        await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/getLineasNegocio')
         .then(response => {
             // Handle response
             //console.log(response.data);
@@ -62,31 +82,10 @@ const SectionVentas =
      lineasNegocioConsulta()
    },[])
 
-  useEffect(() => 
-  {
-    if(clientes.length <= 1)
-    {
-      totales()
-    }
-  },[])
-
-  //Variables de filtros
-  const [dateInicio, setDateInicio] = useState(new Date());
-  const [dateInicioShow, setDateInicioShow] = useState(''); //se va para consulta
-  const [dateFin, setDateFin] = useState(new Date());
-  const [dateFinShow, setDateFinShow] = useState(''); //se va para consulta
-  const [open, setOpen] = useState(false);
-  const [lineaNegocio, setLinea] = useState(''); //se va para consulta
-  const [busqueda, setBusqueda] = useState('');
 
   useEffect(() => 
   {
-    
-  },[busqueda])
-
-  useEffect(() => 
-  {
-    let newFechaInicio= moment(dateInicio).format('YYYY-MM-DD'); 
+    let newFechaInicio = moment(dateInicio).format('YYYY-MM-DD'); 
     setDateInicioShow(newFechaInicio)
     let newFechaFin = moment(dateFin).format('YYYY-MM-DD'); 
     setDateFinShow(newFechaFin)
@@ -134,7 +133,7 @@ const SectionVentas =
                 Fin
               </Text>
                  <View style={{width:150}}>
-                   <Pressable style={styles.buttonCalendar} onPress={() => setOpen(true)}>
+                   <Pressable style={styles.buttonCalendar} onPress={() => setOpen2(true)}>
                       <Text style={styles.fechaShow}>
                          {dateFinShow}
                       </Text>
@@ -146,13 +145,13 @@ const SectionVentas =
                  date={dateFin} 
                  modal 
                  mode="date"
-                 open={open}     
+                 open={open2}     
                  onConfirm={(date) => {
-                        setOpen(false)
+                        setOpen2(false)
                         setDateFin(date)
                      }}
                   onCancel={() => {
-                       setOpen(false)
+                       setOpen2(false)
                 }} />
           </View>
           </View>
@@ -163,7 +162,7 @@ const SectionVentas =
             <DropdownSelect   
                 onValueChange={(itemValue) => setLinea(itemValue)}
                 selectedValue={lineaNegocio}
-                placeholder="TODAS"
+                placeholder=""
                 dropdownStyle={{
                   borderWidth: 0,
                   borderColor:'black',
@@ -192,7 +191,7 @@ const SectionVentas =
           </View>
           <View>
             <View style={{alignSelf:'center', justifyContent:'center', alignContent:'center'}}>
-              <SwitchButtons />
+              <SwitchButtons slide={slide} setSlide={setSlide} />
             </View>
             <View style={{marginTop:20}}>
                <FlatList 

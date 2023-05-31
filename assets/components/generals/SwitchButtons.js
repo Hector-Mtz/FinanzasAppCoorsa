@@ -6,25 +6,29 @@ import {
     Pressable,
     Animated
  } from 'react-native'
-const SwitchButtons = () => 
+const SwitchButtons = (
+    slide,
+    setSlide
+) => 
 {
- const [slide, setSlide] = useState(1); 
+ 
+ //console.log(slide)
+
  const [animacion] =  useState(new Animated.Value(-105))
 
  useEffect(() => 
  {
-    switch (slide) 
+    switch (slide.slide) 
     {
-        case 1:
+        case 0:
             Animated.timing(animacion,{
                 toValue:-118,
                 duration:100,
                 useNativeDriver:false
                }).start()
             break;
-            break;
     
-        case 2:
+        case 1:
             Animated.timing(animacion,{
                 toValue:-12,
                 duration:100,
@@ -32,7 +36,7 @@ const SwitchButtons = () =>
                }).start()
             break;
         
-        case 3:
+        case 2:
             Animated.timing(animacion,{
                 toValue:106,
                 duration:100,
@@ -42,7 +46,7 @@ const SwitchButtons = () =>
     }
     
    //console.log(slide)
- },[slide])
+ },[slide.slide])
 
  const estiloAnimacion = {
     transform:[
@@ -54,10 +58,10 @@ const SwitchButtons = () =>
         <Animated.View style={[styles.slide, estiloAnimacion]}></Animated.View>
         <Pressable onPress={()=> 
         {
-            setSlide(1)
+            slide.setSlide(0)
         }} style={styles.item_slide}>
             {
-                slide == 1 ?
+                slide.slide == 0 ?
                 <Text style={[styles.text,{color:'white', fontWeight:'bold'}]}>Todas</Text>
                 :
                 <Text style={styles.text}>Todas</Text>
@@ -66,10 +70,10 @@ const SwitchButtons = () =>
         </Pressable>
         <Pressable onPress={() => 
         {
-            setSlide(2)
+            slide.setSlide(1)
         }} style={styles.item_slide}>
             {
-                slide == 2 ?
+                slide.slide == 1 ?
                  <Text style={[styles.text,{color:'white', fontWeight:'bold'}]}>Abiertas</Text>
                  :
                  <Text style={styles.text}>Abiertas</Text>
@@ -78,10 +82,10 @@ const SwitchButtons = () =>
         </Pressable>
         <Pressable onPress={() => 
         {
-            setSlide(3)
+            slide.setSlide(2)
         }} style={styles.item_slide}>
             {
-                slide == 3 ?
+                slide.slide == 2 ?
                  <Text style={[styles.text,{color:'white', fontWeight:'bold'}]}>Cerradas</Text>
                 :
                 <Text style={styles.text}>Cerradas</Text>

@@ -4,33 +4,19 @@ import Buscador from '../generals/Buscador'
 import SwitchButtons from '../generals/SwitchButtons';
 import { formatoMoney } from '../../utils/conversiones';
 import DropDownClient from '../generals/DropDownClient';
+import axios from 'axios';
 
 const SectionDepositos = () => {
    //Variables de filtros
    const [busqueda, setBusqueda] = useState('');
+   const [slide, setSlide] = useState(0); 
    //Variables a setear de info
-   const [clientes, setClientes] = useState([
-    {
-        "id": null,
-        "nombre": "SIN CLIENTE",
-        "total_ingresos": 140
-    },
-    {
-        "id": 1,
-        "nombre": "UNILEVER",
-        "total_ingresos": 1
-    },
-    {
-        "id": 4,
-        "nombre": "COLGATE",
-        "total_ingresos": 1
-    }
-  ]);
+   const [clientes, setClientes] = useState([]);
    const [totalDepositos, setTotalDepositos] = useState(0);
 
    const totales = async () => 
    { //http://127.0.0.1:8000/api/ingresosApi
-    await axios.get('https://finanzas.coorsamexico.com/api/ingresosApi')
+    await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/ingresosApi')
      .then(response => 
      {
          //console.log(response.data)
@@ -63,7 +49,7 @@ const SectionDepositos = () => {
       </View>
       <View style={{marginTop:20}}>
         <View style={{alignSelf:'center', justifyContent:'center', alignContent:'center'}}>
-            <SwitchButtons />
+            <SwitchButtons slide={slide} setSlide={setSlide}  />
         </View> 
         <View style={{marginTop:20}}>
             <FlatList 

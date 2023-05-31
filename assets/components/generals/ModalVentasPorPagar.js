@@ -37,7 +37,7 @@ const ModalVentasPorPagar = (
 
     const consultarFacturaOcs = async (id) => 
     {
-        await axios.get("https://finanzas.coorsamexico.com/api/facturaVenta",
+        await axios.get("https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/facturaVenta",
         {
           params:{
             venta_id:id

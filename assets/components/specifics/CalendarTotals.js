@@ -42,7 +42,7 @@ const CalendarTotals = (
   
   const consultarPorDia = async (fecha) =>  //funcion para consultar por dia
   {
-    await axios.get('https://finanzas.coorsamexico.com/api/getDataPorDia',
+    await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/getDataPorDia',
     {
       params:
       {

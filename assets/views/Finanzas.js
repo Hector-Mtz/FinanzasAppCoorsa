@@ -51,7 +51,7 @@ const Finanzas = (
     {
       const lineasNegocioConsulta = async () => 
       {
-         await axios.get('https://finanzas.coorsamexico.com/api/getLineasNegocio')
+         await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/getLineasNegocio')
          .then(response => {
              // Handle response
              //console.log(response.data);
@@ -69,7 +69,7 @@ const Finanzas = (
     {
       const clientesConsulta = async () => 
       {
-        await axios.get('https://finanzas.coorsamexico.com/api/getClientes')
+        await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/getClientes')
         .then(response => {
             // Handle response
             //console.log(response.data);
@@ -86,7 +86,7 @@ const Finanzas = (
     //Solicitud de datos año
     const consultarInforInicio =  async() => 
     {
-      await axios.get('https://finanzas.coorsamexico.com/api/getTotals',
+      await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/getTotals',
       {
         params:{
           year: year,
@@ -108,7 +108,7 @@ const Finanzas = (
     //Solicitud de datos por mes
     const consultarPorMes = async () =>
     {
-      await axios.get('https://finanzas.coorsamexico.com/api/getTotals',
+      await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/getTotals',
       {
         params:{
           year: year,
@@ -130,7 +130,7 @@ const Finanzas = (
     const consultaCalendario = async (date) => 
     {
       //console.log(date)
-      await axios.get('https://finanzas.coorsamexico.com/api/getDataCalendar',{
+      await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/getDataCalendar',{
         params:{
           date:date
         }

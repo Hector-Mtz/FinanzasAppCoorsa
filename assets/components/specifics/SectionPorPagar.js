@@ -9,13 +9,14 @@ import DropDownClient from '../generals/DropDownClient';
 const SectionPorPagar = () => {
   //Variables de filtros
   const [busqueda, setBusqueda] = useState('');
+  const [slide, setSlide] = useState(0); 
   //Variables a pintar
   const [clientes, setClientes] = useState([{id:0, nombre:'DHL'}]);
   const [totalFacturas, setTotalFacturas] = useState(0);
     //Consulta
   const totales = async () => 
   {
-     await axios.get('https://finanzas.coorsamexico.com/api/facturasApi')
+     await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/facturasApi')
      .then(response => {
          //console.log(response.data)
          setTotalFacturas(response.data.totalFacturas.total)
@@ -47,7 +48,7 @@ const SectionPorPagar = () => {
          </View>
          <View style={{marginTop:20}}>
             <View style={{alignSelf:'center', justifyContent:'center', alignContent:'center'}}>
-              <SwitchButtons />
+              <SwitchButtons slide={slide} setSlide={setSlide}  />
             </View>
             <View style={{marginTop:20}}>
                <FlatList 

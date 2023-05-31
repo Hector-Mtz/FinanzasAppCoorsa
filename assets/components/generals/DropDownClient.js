@@ -69,7 +69,7 @@ const DropDownClient = (
     //Si son ventas
     if(item.type == 'Ventas')
     {
-        await axios.get("https://finanzas.coorsamexico.com/api/ventasByClienteApi/"+ id,
+        await axios.get("https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/ventasByClienteApi/"+ id,
         {
           params:{} //aqui van los parametros como linea de negocio, etc para filtrar
         })
@@ -88,7 +88,7 @@ const DropDownClient = (
     if(item.type == 'Facturas')
     {
       //console.log(id)
-      await axios.get("https://finanzas.coorsamexico.com/api/facturasByClienteApi",
+      await axios.get("https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/facturasByClienteApi",
       {
         params:{
           cliente_id:id
@@ -115,7 +115,7 @@ const DropDownClient = (
 
     if(item.type == 'Depositos')
     {
-      await axios.get("http://127.0.0.1:8000/api/ingresoByClienteApi",
+      await axios.get("https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/ingresoByClienteApi",
       {
         params:{
           cliente_id:id
