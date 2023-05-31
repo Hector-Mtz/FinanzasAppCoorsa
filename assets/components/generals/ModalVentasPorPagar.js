@@ -202,7 +202,7 @@ const styles = StyleSheet.create( {
      borderRadius:5,
      padding:6,
      borderColor:'#1D96F1',
-     paddingHorizontal:20,
+     paddingHorizontal:5,
      marginTop:8
   },
   textCantidad:

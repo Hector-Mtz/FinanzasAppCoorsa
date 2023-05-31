@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react'
-import { Text, View, StyleSheet, Animated } from 'react-native'
+import { Text, View, StyleSheet, Animated, Pressable } from 'react-native'
 import {Calendar, LocaleConfig, Agenda, AgendaEntry, AgendaSchedule, DateData} from 'react-native-calendars';
 import testIds from '../../utils/testIds';
 import { formatoMoney } from '../../utils/conversiones';
 import axios from 'axios';
+import ModalTypeMoveAll from './Partials/ModalTypeMoveAll';
 
 const CalendarTotals = (
     {
@@ -39,9 +40,11 @@ const CalendarTotals = (
      consultarPorDia(selected)
   },[selected])
 
-  
+  //Variable del dia
+  const [dia, setDia] = useState('');
   const consultarPorDia = async (fecha) =>  //funcion para consultar por dia
   {
+    setDia(fecha)
     await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/getDataPorDia',
     {
       params:
@@ -100,6 +103,10 @@ const CalendarTotals = (
   
   const [change, setChange] = useState(true)
 
+  //Variable para modal
+  const [modalItem, setModalItem] = useState(false)
+  const [title, setTitle] = useState('');
+   
   return (
     <View>
         {
@@ -143,7 +150,12 @@ const CalendarTotals = (
                    </Text>
                  </View>
                   <View>
-                      <View style={styles.contenedorIndicador}>
+                      <Pressable onPress={() => 
+                       {
+                        setModalItem(true)
+                        setTitle('Ventas')
+                        //console.log(ventaShow)
+                       }} style={styles.contenedorIndicador}>
                          <View style={{flexDirection:'row'}}>
                            <Text style={styles.indicator}>V</Text>
                            <View style={[styles.span, colors.ventas]}></View>
@@ -151,17 +163,27 @@ const CalendarTotals = (
                              <Text style={{color:'#C6C6C6'}}> $ {formatoMoney(ventaShow)} </Text>
                            </View>
                          </View>
-                      </View>
-                      <View style={styles.contenedorIndicador}>
+                      </Pressable>
+                      <Pressable  onPress={() => 
+                       {
+                        setModalItem(true)
+                        setTitle('Por cobrar')
+                        //console.log(ventaShow)
+                       }}  style={styles.contenedorIndicador}>
                          <View  style={{flexDirection:'row'}}>
                            <Text style={styles.indicator}>PC</Text>
                            <View style={[styles.span, colors.pc]}></View>
                            <View style={{marginLeft:70}}>
-                             <Text style={{color:'#C6C6C6'}}> $ {formatoMoney(pcShow)} </Text>
+                              <Text style={{color:'#C6C6C6'}}> $ {formatoMoney(pcShow)} </Text>
                            </View>
                          </View>
-                      </View>
-                      <View style={styles.contenedorIndicador}>
+                      </Pressable>
+                      <Pressable  onPress={() => 
+                       {
+                        setModalItem(true)
+                        setTitle('Por pagar')
+                        //console.log(ventaShow)
+                       }}  style={styles.contenedorIndicador}>
                          <View style={{flexDirection:'row'}}>
                            <Text style={styles.indicator}>PP</Text>
                            <View style={[styles.span, colors.pp]}></View>
@@ -169,8 +191,13 @@ const CalendarTotals = (
                              <Text style={{color:'#C6C6C6'}}> $ {formatoMoney(ppShow)} </Text>
                            </View>
                          </View>
-                      </View>
-                      <View style={styles.contenedorIndicador}>
+                      </Pressable>
+                      <Pressable  onPress={() => 
+                       {
+                        setModalItem(true)
+                        setTitle('Cobrado')
+                        //console.log(ventaShow)
+                       }}  style={styles.contenedorIndicador}>
                          <View style={{flexDirection:'row'}}>
                            <Text style={styles.indicator}>C</Text>
                            <View style={[styles.span, colors.c]}></View>
@@ -178,8 +205,13 @@ const CalendarTotals = (
                              <Text style={{color:'#C6C6C6'}}> $ {formatoMoney(cShow)} </Text>
                            </View>
                          </View>
-                      </View>
-                      <View style={styles.contenedorIndicador}>
+                      </Pressable>
+                      <Pressable  onPress={() => 
+                       {
+                        setModalItem(true)
+                        setTitle('Descuento')
+                        //console.log(ventaShow)
+                       }}  style={styles.contenedorIndicador}>
                          <View style={{flexDirection:'row'}}>
                            <Text style={styles.indicator}>D</Text>
                            <View style={[styles.span, colors.n]}></View>
@@ -187,7 +219,7 @@ const CalendarTotals = (
                              <Text style={{color:'#C6C6C6'}}> $ {formatoMoney(notashow)} </Text>
                            </View>
                          </View>
-                      </View>
+                      </Pressable>
                   </View>
                 </View>
                 : null
@@ -196,7 +228,7 @@ const CalendarTotals = (
             :
           null
         }
-
+     <ModalTypeMoveAll modalItem={modalItem} setModalItem={setModalItem} title={title} dia={dia} />
    </View>
   )
 }

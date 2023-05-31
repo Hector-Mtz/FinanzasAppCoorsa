@@ -39,70 +39,7 @@ const ReporteAnual = (
       </Text>
       <CalendarButton type={'mensual'} year={year} setYear={setYear} month={month} setMonth={setMonth} />
     </View>
-    <View style={{marginTop:10}}>
-          <Text>Líneas de negocio</Text>
-          <DropdownSelect   
-            onValueChange={(itemValue) => setLinea(itemValue)}
-            selectedValue={lineaNegocio}
-            placeholder="TODAS"
-            dropdownStyle={{
-              borderWidth: 0,
-              borderColor:'black',
-                 
-            }}
-            checkboxStyle={{
-              backgroundColor: '#1D96F1',
-              borderRadius: 30, // To get a circle - add the checkboxSize and the padding size
-              padding: 5,
-              borderColor:'white'
-            }}
-            optionLabel={'name'}
-            optionValue={'id'}
-            checkboxLabelStyle={{ color: 'black', fontSize: 15 }}
-            options={lineasNegocio}
-            listHeaderComponent={
-              <View style={{alignItems:'center'}}>
-                <Text style={{color:'black', fontSize:20}} >
-                  Lineas de negocio disponibles
-                </Text>
-              </View>
-            }  
-            >
-          </DropdownSelect>
-    </View>
-    <View>
-          <Text>Cliente</Text>
-          <DropdownSelect   
-            onValueChange={(itemValue) => setCliente(itemValue)}
-            selectedValue={cliente}
-            placeholder="TODAS"
-            dropdownStyle={{
-              borderWidth: 0,
-              borderColor:'black',
-                 
-            }}
-            checkboxStyle={{
-              backgroundColor: '#1D96F1',
-              borderRadius: 30, // To get a circle - add the checkboxSize and the padding size
-              padding: 10,
-              borderColor:'white'
-            }}
-            optionLabel={'nombre'}
-            optionValue={'id'}
-            checkboxLabelStyle={{ color: 'black', fontSize: 15 }}
-            options={clientes}
-            listHeaderComponent={
-              <View style={{alignItems:'center'}}>
-                <Text style={{color:'black', fontSize:20}} >
-                  Lineas de negocio disponibles
-                </Text>
-               
-              </View>
-            }  
-            >
-          </DropdownSelect>
-       </View>
-       <View style={styles.contenedorCantidades}>
+    <View style={styles.contenedorCantidades}>
          <View>
            <View style={[styles.contenedorCantidad, styles.ventas]}>
               <Text style={{color:'white', textTransform:'uppercase'}}>Ventas</Text>
@@ -169,7 +106,7 @@ const styles = StyleSheet.create({
   contenedorCantidades:
   {
     flexDirection:'row',
-    marginTop:-18
+    marginTop:50
   },
   contenedorCantidad:{
     paddingVertical:15,

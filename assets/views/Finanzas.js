@@ -54,8 +54,15 @@ const Finanzas = (
          await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/getLineasNegocio')
          .then(response => {
              // Handle response
-             //console.log(response.data);
-             setLineasNegocio(response.data)
+             let newArrayLineasNeg = [];
+             newArrayLineasNeg.push({id:null, name:'TODAS'})
+             for (let index = 0; index < response.data.length; index++)
+             {
+                const newLine = response.data[index];
+                newArrayLineasNeg.push(newLine);
+             }
+             //console.log(newArrayLineasNeg)
+             setLineasNegocio(newArrayLineasNeg)
          })
          .catch(err => {
              // Handle errors
@@ -73,7 +80,14 @@ const Finanzas = (
         .then(response => {
             // Handle response
             //console.log(response.data);
-            setClientes(response.data)
+            let newArrayClientes = [];
+            newArrayClientes.push({id:null, name:'TODOS'})
+            for (let index = 0; index < response.data.length; index++)
+            {
+              const cliente = response.data[index];
+              newArrayClientes.push(cliente)
+            }
+            setClientes(newArrayClientes)
         })
         .catch(err => {
             // Handle errors
@@ -86,45 +100,91 @@ const Finanzas = (
     //Solicitud de datos año
     const consultarInforInicio =  async() => 
     {
-      await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/getTotals',
+      console.log(cliente)
+      if(lineaNegocio == null && cliente == null)
       {
-        params:{
-          year: year,
-          lineas_negocio_id: lineaNegocio,
-          cliente_id: cliente
-        }
-      })
-      .then(response => {
-          // Handle response
-          //console.log(response.data);
-          setTotals(response.data)
-       
-      })
-      .catch(err => {
-          // Handle errors
-          console.error(err);
-      });
+        await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/getTotals',
+        {
+          params:{
+            year: year,
+          }
+        })
+        .then(response => {
+            // Handle response
+            //console.log(response.data);
+            setTotals(response.data)
+         
+        })
+        .catch(err => {
+            // Handle errors
+            console.error(err);
+        });
+      }
+      else
+      {
+        await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/getTotals',
+        {
+          params:{
+            year: year,
+            lineas_negocio_id:lineaNegocio,
+            cliente_id: cliente
+          }
+        })
+        .then(response => {
+            // Handle response
+            //console.log(response.data);
+            setTotals(response.data)
+         
+        })
+        .catch(err => {
+            // Handle errors
+            console.error(err);
+        });
+      }
+    
+
     }
     //Solicitud de datos por mes
     const consultarPorMes = async () =>
     {
+      if(lineaNegocio == null || cliente == null  )
+      {
+        await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/getTotals',
+        {
+          params:{
+            year: year,
+            month:month,
+          }
+        }).then(response => {
+          // Handle response
+           console.log(response.data);   
+           setTotalsMensual(response.data)    
+         })
+         .catch(err => {
+             // Handle errors
+             console.error(err);
+         });
+      }
+      else
+      {
       await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/getTotals',
       {
-        params:{
-          year: year,
-          month:month,
-          lineas_negocio_id: lineaNegocio,
-          cliente_id: cliente
+           params:{
+             year: year,
+             month:month,
+             lineas_negocio_id: lineaNegocio,
+             cliente_id: cliente
+           }
+         }).then(response => {
+           // Handle response
+            console.log(response.data);   
+            setTotalsMensual(response.data)    
+          })
+          .catch(err => {
+              // Handle errors
+              console.error(err);
+          });
         }
-      }).then(response => {
-        // Handle response
-         console.log(response.data);   
-         setTotalsMensual(response.data)    
-       })
-       .catch(err => {
-           // Handle errors
-           console.error(err);
-       });
     }
     //Solicitud de datos de fecha
     const consultaCalendario = async (date) => 
