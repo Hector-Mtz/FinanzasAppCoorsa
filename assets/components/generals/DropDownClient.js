@@ -42,7 +42,7 @@ const DropDownClient = (
      {
        Animated.timing(
         animacion,{
-            toValue:250,
+            toValue:210,
             duration:100,
             useNativeDriver:false
         }

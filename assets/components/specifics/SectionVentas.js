@@ -43,8 +43,19 @@ const SectionVentas =
    const totales = async (busqueda, fechaInicio, fechaFinal, lineaNegocio, status) => 
    {
       //console.log([busqueda, fechaInicio, fechaFinal, lineaNegocio, status])
-      await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/getTotalsItems')
+      await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/getTotalsItems',
+      {
+        params:
+        {
+          search:busqueda,
+          lineas_negocio_id: lineaNegocio,
+          fecha_inicio:fechaInicio,
+          fecha_fin:fechaFinal, 
+          status:status
+        }
+      })
       .then(response => {
+         // console.log(response.data)
           setClientes(response.data.clientes)
           setTotal(response.data.totalVentasStatus[0].total)
           //console.log(response.data.totalVentasStatus[0].total)
@@ -57,7 +68,29 @@ const SectionVentas =
 
    useEffect(() => 
    {
-      totales(busqueda, dateInicioShow, dateFinShow, lineaNegocio, slide)
+     let newFechaInicio = moment(dateInicio).format('YYYY-MM-DD'); 
+     setDateInicioShow(newFechaInicio)
+     let newFechaFin = moment(dateFin).format('YYYY-MM-DD'); 
+     setDateFinShow(newFechaFin)
+   },[dateInicio, dateFin])
+
+   useEffect(() => 
+   {
+       let fechaInicioTemporal = new Date();
+       let fechaFinalTemporal = new Date();
+       let newFechaInicio = moment(fechaFinalTemporal).format('YYYY-MM-DD'); 
+       let newFechaFin = moment(fechaFinalTemporal).format('YYYY-MM-DD'); 
+
+       if(newFechaInicio === dateInicioShow || newFechaFin === dateFinShow)
+       {
+            //si son iguales a las de hoy no consultara bien
+            totales(busqueda, null, null, lineaNegocio, slide)
+       }
+       else
+       {      
+         totales(busqueda, dateInicioShow, dateFinShow, lineaNegocio, slide)
+       }
+
    },[busqueda, dateInicioShow, dateFinShow,lineaNegocio, slide ])
 
 
@@ -70,7 +103,15 @@ const SectionVentas =
         .then(response => {
             // Handle response
             //console.log(response.data);
-            setLineasNegocio(response.data)
+            let newArrayLineasNeg = [];
+            newArrayLineasNeg.push({id:null, name:'TODAS'})
+            for (let index = 0; index < response.data.length; index++)
+            {
+               const newLine = response.data[index];
+               newArrayLineasNeg.push(newLine);
+            }
+            //console.log(newArrayLineasNeg)
+            setLineasNegocio(newArrayLineasNeg)
         })
         .catch(err => {
             // Handle errors
@@ -79,17 +120,6 @@ const SectionVentas =
      }
      lineasNegocioConsulta()
    },[])
-
-
-  useEffect(() => 
-  {
-    let newFechaInicio = moment(dateInicio).format('YYYY-MM-DD'); 
-    setDateInicioShow(newFechaInicio)
-    let newFechaFin = moment(dateFin).format('YYYY-MM-DD'); 
-    setDateFinShow(newFechaFin)
-  },[dateInicio, dateFin])
-
- 
 
   return (
     <View style={styles.contenedor}>

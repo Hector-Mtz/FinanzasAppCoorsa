@@ -81,7 +81,7 @@ const Finanzas = (
             // Handle response
             //console.log(response.data);
             let newArrayClientes = [];
-            newArrayClientes.push({id:null, name:'TODOS'})
+            newArrayClientes.push({id:null, nombre:'TODOS'})
             for (let index = 0; index < response.data.length; index++)
             {
               const cliente = response.data[index];

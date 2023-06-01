@@ -14,9 +14,15 @@ const SectionDepositos = () => {
    const [clientes, setClientes] = useState([]);
    const [totalDepositos, setTotalDepositos] = useState(0);
 
-   const totales = async () => 
+   const totales = async (search, status) => 
    { //http://127.0.0.1:8000/api/ingresosApi
-    await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/ingresosApi')
+    await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/ingresosApi',{
+      params:
+      {
+        search:search,
+        status:status
+      }
+    })
      .then(response => 
      {
          //console.log(response.data)
@@ -29,19 +35,11 @@ const SectionDepositos = () => {
      }); 
    }
 
-   useEffect(() => 
-   {
-     if(clientes.length <= 1)
-     {
-       totales()
-     }
-   },[])
-
    //Efects para aplicar filtros
    useEffect(() => 
    {
-     
-   },[busqueda])
+      totales(busqueda, slide)
+   },[busqueda, slide])
   return (
    <View>
       <View style={{flexDirection:'row', alignItems:'center', alignSelf:'center'}} >
