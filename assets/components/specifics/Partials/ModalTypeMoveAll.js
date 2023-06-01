@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, {useState, useEffect} from 'react'
 import { View, Modal, StyleSheet, Text, Pressable, Image, Animated } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler';
+import { formatoMoney } from '../../../utils/conversiones';
 
 const ModalTypeMoveAll = (
     modalItem,
@@ -14,16 +15,35 @@ const ModalTypeMoveAll = (
     //Variables de animacion
     const [show, setShow] = useState(false); //variable para el slide
     const [animacion] = useState(new Animated.Value(0)) 
+    const IVA = 0.16;
     //Esto es para consultar los datos dependiendo que piquemos
     useEffect(() => 
     { 
+      let rutaAConsultar;
       if(modalItem.modalItem)
       {
          switch (modalItem.title) 
          {
+ 
             case 'Ventas':
-                  let rutaAConsultar = 'https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/ventasByDay';
+                rutaAConsultar  = 'https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/ventasByDay';
                   consultarItemsByDay(modalItem.dia, rutaAConsultar)
+                break;
+            case 'Por cobrar':
+                 rutaAConsultar = 'https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/ocsByDay';
+                 consultarItemsByDay(modalItem.dia, rutaAConsultar)
+              break;
+            case 'Por pagar':
+                 rutaAConsultar ='https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/facturasByDay'
+                 consultarItemsByDay(modalItem.dia, rutaAConsultar)
+                break;
+            case 'Cobrado':
+                  rutaAConsultar = 'https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/ingresosByDay'
+                  consultarItemsByDay(modalItem.dia, rutaAConsultar)
+                break;
+            case 'Descuento':
+                rutaAConsultar = 'https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/notasByDay';
+                consultarItemsByDay(modalItem.dia, rutaAConsultar)
                 break;
          }
       }
@@ -56,7 +76,7 @@ const ModalTypeMoveAll = (
        {
          Animated.timing(
           animacion,{
-              toValue:250,
+              toValue:100,
               duration:100,
               useNativeDriver:false
           }
@@ -137,15 +157,14 @@ const ModalTypeMoveAll = (
                                               <Text style={styles.tableRow}> {item.nombre} </Text>
                                           </View>
                                           <View>
-                                              <Text style={styles.tableRow}>hola </Text>
+                                              <Text style={styles.tableRow}>$ {formatoMoney((item.sub_total*IVA +item.sub_total).toFixed(2))} </Text>
                                           </View>
                                           <View>
-                                              <Text style={styles.tableRow}>hola</Text>
+                                              <Text style={styles.tableRow}>
+
+                                              </Text>
                                           </View>
                                           <View>
-                                             <Pressable  style={styles.buttonWatch}>
-                                                <Image source={require('../../../img/eye.png')} />
-                                             </Pressable>
                                              <Pressable onPress={() => 
                                             {
                                                 setShow(!show)
@@ -155,7 +174,18 @@ const ModalTypeMoveAll = (
                                           </View>
                                        </View>
                                        <Animated.View style={{height:animacion}}>
-                                             <Text>Hola mundo</Text>
+                                             <View style={{flexDirection:'row'}}>
+                                                <Text style={styles.intoSlide}>Subtotal</Text>
+                                                <Text style={styles.itemText}>$ {formatoMoney(item.sub_total.toFixed(2))}</Text>
+                                             </View>
+                                             <View style={{flexDirection:'row', marginVertical:5}}>
+                                                <Text style={styles.intoSlide}>Total</Text>
+                                                <Text style={styles.itemText}>$ {formatoMoney((item.sub_total*IVA +item.sub_total).toFixed(2))}</Text>
+                                             </View> 
+                                             <View style={{flexDirection:'row'}}>
+                                                <Text style={styles.intoSlide}>Comentario</Text>
+                                                <Text style={styles.itemText}>{item.comentario}</Text>
+                                             </View>  
                                         </Animated.View>
                                      </View>   
                                     )
@@ -164,6 +194,220 @@ const ModalTypeMoveAll = (
                             </View>
                         </View>
                         :null
+                    }
+                    {
+                        modalItem.title == 'Por cobrar' ? 
+                        <View>
+                            <View style={{flexDirection:'row', alignItems:'center', justifyContent:'flex-end', marginTop:10}}>
+                                <Text style={styles.date} >{(modalItem.dia).substring(8,10)}</Text>
+                                <View style={styles.span}></View>
+                                <Text style={styles.date} >{(modalItem.dia).substring(5,7)}</Text>
+                                <View style={styles.span}></View>
+                                <Text style={styles.date} >{(modalItem.dia).substring(0,4)}</Text>
+                                <View style={styles.span}></View>
+                            </View>
+                            <View style={{marginTop:10}}>
+                                <View style={{flexDirection:'row', justifyContent:'space-between', borderBottomColor:'#1D96F1', borderBottomWidth:1,}}>
+                                    <View style={styles.contenedorText}>
+                                        <Text style={styles.th}>
+                                            Nombre
+                                        </Text>
+                                    </View>
+                                    <View style={styles.contenedorText}>
+                                        <Text style={styles.th}>
+                                            Total
+                                        </Text>
+                                    </View>
+                                    <View style={styles.contenedorText}>
+                                        <Text style={styles.th}>
+                                            Venta
+                                        </Text>
+                                    </View>
+                                </View>
+                                <FlatList 
+                                  data={items}
+                                  keyExtractor={(item) => item.id }
+                                  renderItem={({item}) => 
+                                  {
+                                    return (
+                                     <View style={{flexDirection:'row', justifyContent:'space-between', borderBottomColor:'#C6C6C6', borderBottomWidth:0.5, paddingVertical:15}}>
+                                        <View>
+                                            <Text style={styles.itemText}>{item.nombre}</Text>
+                                        </View>
+                                        <View>
+                                            <Text style={styles.itemText}>$ {formatoMoney(item.cantidad.toFixed(2))}</Text>
+                                        </View>
+                                        <View>
+                                            <Text style={styles.itemText}>{item.venta}</Text>
+                                        </View>
+                                     </View>   
+                                    )
+                                  }}
+                                />
+                            </View>
+                        </View>
+                        : null
+                    }
+                    {
+                        modalItem.title == 'Por pagar' ? 
+                        <View>
+                            <View style={{flexDirection:'row', alignItems:'center', justifyContent:'flex-end', marginTop:10}}>
+                                <Text style={styles.date} >{(modalItem.dia).substring(8,10)}</Text>
+                                <View style={styles.span}></View>
+                                <Text style={styles.date} >{(modalItem.dia).substring(5,7)}</Text>
+                                <View style={styles.span}></View>
+                                <Text style={styles.date} >{(modalItem.dia).substring(0,4)}</Text>
+                                <View style={styles.span}></View>
+                            </View>
+                            <View style={{marginTop:10}}>
+                               <View style={{flexDirection:'row', justifyContent:'space-between', borderBottomColor:'#1D96F1', borderBottomWidth:1,}}>
+                                    <View style={styles.contenedorText}>
+                                        <Text style={styles.th}>
+                                            Referencia
+                                        </Text>
+                                    </View>
+                                    <View style={styles.contenedorText}>
+                                        <Text style={styles.th}>
+                                            Total
+                                        </Text>
+                                    </View>
+                                    <View style={styles.contenedorText}>
+                                        <Text style={styles.th}>
+                                            
+                                        </Text>
+                                    </View>
+                                </View>
+                                <View>
+                                    <FlatList 
+                                      data={items}
+                                      keyExtractor={(item) => item.id }
+                                      renderItem={({item}) => 
+                                      {
+                                        return (
+                                         <View style={{flexDirection:'row', justifyContent:'space-between', borderBottomColor:'#C6C6C6', borderBottomWidth:0.5, paddingVertical:15}}>
+                                            <View>
+                                                <Text style={styles.itemText}>#{item.referencia}</Text>
+                                            </View>
+                                            <View>
+                                                <Text style={styles.itemText}>$ {formatoMoney(item.cantidad.toFixed(2))}</Text>
+                                            </View>
+                                            <View>
+                                              
+                                            </View>
+                                         </View>   
+                                        )
+                                      }}
+                                    />
+                                </View>
+                            </View>
+                        </View>
+                        :null
+                    }
+                    {
+                        modalItem.title == 'Cobrado' ?
+                        <View>
+                            <View style={{flexDirection:'row', alignItems:'center', justifyContent:'flex-end', marginTop:10}}>
+                                <Text style={styles.date} >{(modalItem.dia).substring(8,10)}</Text>
+                                <View style={styles.span}></View>
+                                <Text style={styles.date} >{(modalItem.dia).substring(5,7)}</Text>
+                                <View style={styles.span}></View>
+                                <Text style={styles.date} >{(modalItem.dia).substring(0,4)}</Text>
+                                <View style={styles.span}></View>
+                            </View>
+                            <View style={{marginTop:10}}>
+                               <View style={{flexDirection:'row', justifyContent:'space-between', borderBottomColor:'#1D96F1', borderBottomWidth:1,}}>
+                                    <View style={styles.contenedorText}>
+                                        <Text style={styles.th}>
+                                            Nombre
+                                        </Text>
+                                    </View>
+                                    <View style={styles.contenedorText}>
+                                        <Text style={styles.th}>
+                                            Total
+                                        </Text>
+                                    </View>
+                                    <View style={styles.contenedorText}>
+                                        <Text style={styles.th}>
+                                            
+                                        </Text>
+                                    </View>
+                                </View>  
+                                <FlatList 
+                                      data={items}
+                                      keyExtractor={(item) => item.id }
+                                      renderItem={({item}) => 
+                                      {
+                                        return (
+                                         <View style={{flexDirection:'row', justifyContent:'space-between', borderBottomColor:'#C6C6C6', borderBottomWidth:0.5, paddingVertical:15}}>
+                                            <View>
+                                                <Text style={styles.itemText}>#{item.nombre}</Text>
+                                            </View>
+                                            <View>
+                                                <Text style={styles.itemText}>$ {formatoMoney(item.cantidad.toFixed(2))}</Text>
+                                            </View>
+                                            <View>
+                                              
+                                            </View>
+                                         </View>   
+                                        )
+                                      }}
+                                    />
+                            </View>
+                        </View>
+                        :null
+                    }
+                    {
+                          modalItem.title == 'Descuento' ?
+                          <View>
+                              <View style={{flexDirection:'row', alignItems:'center', justifyContent:'flex-end', marginTop:10}}>
+                                  <Text style={styles.date} >{(modalItem.dia).substring(8,10)}</Text>
+                                  <View style={styles.span}></View>
+                                  <Text style={styles.date} >{(modalItem.dia).substring(5,7)}</Text>
+                                  <View style={styles.span}></View>
+                                  <Text style={styles.date} >{(modalItem.dia).substring(0,4)}</Text>
+                                  <View style={styles.span}></View>
+                              </View>
+                              <View style={{marginTop:10}}>
+                                 <View style={{flexDirection:'row', justifyContent:'space-between', borderBottomColor:'#1D96F1', borderBottomWidth:1,}}>
+                                      <View style={styles.contenedorText}>
+                                          <Text style={styles.th}>
+                                              Nombre
+                                          </Text>
+                                      </View>
+                                      <View style={styles.contenedorText}>
+                                          <Text style={styles.th}>
+                                              Total
+                                          </Text>
+                                      </View>
+                                      <View style={styles.contenedorText}>
+                                          <Text style={styles.th}>
+                                              
+                                          </Text>
+                                      </View>
+                                  </View>  
+                                  <FlatList 
+                                        data={items}
+                                        keyExtractor={(item) => item.id }
+                                        renderItem={({item}) => 
+                                        {
+                                          return (
+                                           <View style={{flexDirection:'row', justifyContent:'space-between', borderBottomColor:'#C6C6C6', borderBottomWidth:0.5, paddingVertical:15}}>
+                                              <View>
+                                                  <Text style={styles.itemText}>#{item.nombre}</Text>
+                                              </View>
+                                              <View>
+                                                  <Text style={styles.itemText}>$ {formatoMoney(item.cantidad.toFixed(2))}</Text>
+                                              </View>
+                                              <View>
+                                                
+                                              </View>
+                                           </View>   
+                                          )
+                                        }}
+                                      />
+                              </View>
+                          </View>
+                          :null
                     }
                   </View>
               </View>
@@ -239,6 +483,25 @@ const styles =  StyleSheet.create(
             borderRadius:12,
             alignItems:'center',
             marginTop:8
+          },
+          intoSlide:
+          {
+             color:'black',
+             fontSize:13,
+             fontWeight:'300',
+             marginRight:20
+          },
+          itemText:{
+            color:'black',
+            fontWeight:'300',
+            fontSize:13
+          },
+          contenedorText:
+          {
+            textAlign:'center',
+            justifyContent:'center',
+            alignContent:'center',
+            alignItems:'center'
           }
     }
 );

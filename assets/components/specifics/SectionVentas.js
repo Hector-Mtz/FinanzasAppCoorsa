@@ -43,9 +43,7 @@ const SectionVentas =
    const totales = async (busqueda, fechaInicio, fechaFinal, lineaNegocio, status) => 
    {
       //console.log([busqueda, fechaInicio, fechaFinal, lineaNegocio, status])
-      await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/getTotalsItems', {
-
-      })
+      await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/getTotalsItems')
       .then(response => {
           setClientes(response.data.clientes)
           setTotal(response.data.totalVentasStatus[0].total)

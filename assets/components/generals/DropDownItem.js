@@ -53,7 +53,7 @@ const DropDownItem = (
 
 
   return (
-    <Pressable style={styles.contenedor} onPress={() => {setShow(!show)}}>
+    <Pressable style={styles.contenedor} onLongPress={() => {setShow(!show)}}>
       <View style={styles.headerCard}>
          <Text style={styles.titulo}>
             {title} 
