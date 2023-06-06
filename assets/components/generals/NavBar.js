@@ -23,9 +23,6 @@ const NavBar = ({
  
   return (
     <View style={styles.contenedor}> 
-      <Text style={styles.text}>
-        User
-      </Text>
       <Pressable onPress={() => {
          setShow(!show)
       }}>
@@ -48,8 +45,8 @@ const styles = StyleSheet.create({
     contenedor:
     {
       flexDirection:'row',
-      justifyContent:'space-between',
-      marginLeft:200
+      justifyContent:'flex-end',
+      marginLeft:280
     },
     text:{
       color:'white',

@@ -100,7 +100,7 @@ const Finanzas = (
     //Solicitud de datos año
     const consultarInforInicio =  async() => 
     {
-      console.log(cliente)
+      //console.log(cliente)
       if(lineaNegocio == null && cliente == null)
       {
         await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/getTotals',
@@ -157,7 +157,7 @@ const Finanzas = (
           }
         }).then(response => {
           // Handle response
-           console.log(response.data);   
+           //console.log(response.data);   
            setTotalsMensual(response.data)    
          })
          .catch(err => {
@@ -198,76 +198,199 @@ const Finanzas = (
         {
           //console.log(response);
           let objectGlobal = {};
-          for (let index = 0; index < response.data.ventas.length; index++)  //seteamos las ventas
+          if(response.data.ventas.length === 0)
           {
-            const venta = response.data.ventas[index];
-            //console.log(fecha.fechaInicial)
-            objectGlobal[`${venta.fechaInicial}`] =  
-            {
-              marked:true,
-              selected:false,
-              dots:[ventas]
-            } 
-          }
+             for (let index = 0; index < response.data.pp.length; index++) 
+             {
+               const ppTemp = response.data.pp[index];
+               objectGlobal[`${ppTemp.fechaDePago}`] =  
+               {
+                 marked:true,
+                 selected:false,
+                 dots:[pp]
+               } 
+             }
 
-          for (let index2 = 0; index2 < response.data.pp.length; index2++)  //seteamos las ventas
-          {
-            const ppTemp = response.data.pp[index2];
-            //console.log(ppTemp)
-            for(let fecha in objectGlobal)
+             //Recorrido c
+             for (let index3 = 0; index3 < response.data.c.length; index3++) 
+             {
+               let y = 1 //variable que aumenta
+               let x = 0; //variable para validar
+               const cTemp = response.data.c[index3];
+               //console.log(cTemp)
+               let newDate =  cTemp.created_at.toString(); //substring(0,10);
+               let dateAComparar = newDate.substring(0,10);
+   
+               //console.log(dateAComparar)
+   
+               for(let clave in objectGlobal)
+               {
+                 if(clave === dateAComparar)
+                 {
+                   objectGlobal[clave].dots.push({color:'#56D0C1'})
+                   x = 1 ;
+                 }
+                 else
+                 {
+                   if (index3 === (response.data.c.length-1) && x===0 && y === Object.keys(objectGlobal).length)
+                   {
+                     objectGlobal[`${dateAComparar}`] =  
+                     {
+                       marked:true,
+                       selected:false,
+                       dots:[c]
+                     } 
+                   }  
+                 }
+                 y++
+               }
+         
+             }
+
+                         //Recorrido pc
+            for (let index2 = 0; index2 < response.data.pc.length; index2++) 
             {
-              if(fecha == ppTemp.fechaDePago)
+              let y = 1 //variable que aumenta
+              let x = 0; //variable para validar
+              const pcTemp = response.data.pc[index2];
+              for(let fecha in objectGlobal)
               {
-                objectGlobal[fecha].dots.push(pp)
-              }
-              /*
-              else
-              {
-                objectGlobal[`${ppTemp.fechaDePago}`] =  {
-                  marked:true,
-                  dots:[pp]
+                if(fecha === pcTemp.fechaInicial)
+                {
+                  objectGlobal[fecha].dots.push(pc)
+                  x = 1 ;
                 }
+                else
+                {
+                  if (index2 === (response.data.pc.length-1) && x===0 && y === Object.keys(objectGlobal).length)
+                  {
+                    objectGlobal[`${pcTemp.fechaInicial}`] =  
+                    {
+                      marked:true,
+                      selected:false,
+                      dots:[pc]
+                    } 
+                  }
+                }
+                y++
               }
-              */
+              
             }
-
           }
-
-        for (let index3 = 0; index3 < response.data.pc.length; index3++) 
-        {
-          const pcTemp = response.data.pc[index3];
-          let fechaPc = pcTemp.fecha_alta.toString();
-      
-          let dia = fechaPc.substring(0,2)
-
-          let mes = fechaPc.substring(3,5)
-
-          let año = fechaPc.substring(6,10)
-
-          let newFecha = año + '-' + mes + '-' +dia;
-
-          for(let fecha in objectGlobal)
+          else
           {
-            if(fecha == newFecha)
+            for (let index = 0; index < response.data.ventas.length; index++)
             {
-              objectGlobal[fecha].dots.push(pc)
+              const venta = response.data.ventas[index];
+              //console.log(fecha.fechaInicial)
+              objectGlobal[`${venta.fechaInicial}`] =  
+              {
+                marked:true,
+                selected:false,
+                dots:[ventas]
+              } 
+            }
+            
+            //Recorrido para pp
+            for (let index = 0; index < response.data.pp.length; index++)
+            {
+               let y = 1
+               let x = 0;
+               const ppTemp = response.data.pp[index];
+               //console.log(ppTemp.fechaDePago)
+               for(let clave in objectGlobal)
+               {
+                //console.log(index)
+                //console.log(response.data.pp.length)
+                  if(ppTemp.fechaDePago === clave)
+                  {
+                    objectGlobal[clave].dots.push(pp);
+                    x = 1  
+                  }
+                  else
+                  {
+                    if (index === (response.data.pp.length-1) && x===0 && y === Object.keys(objectGlobal).length)
+                    {
+                      objectGlobal[`${ppTemp.fechaDePago}`] =  
+                      {
+                        marked:true,
+                        selected:false,
+                        dots:[pp]
+                      } 
+                    }
+                    }        
+                  y++
+                //console.log(y)
+               }
+            }
+            //Recorrido pc
+            for (let index2 = 0; index2 < response.data.pc.length; index2++) 
+            {
+              let y = 1 //variable que aumenta
+              let x = 0; //variable para validar
+              const pcTemp = response.data.pc[index2];
+              for(let fecha in objectGlobal)
+              {
+                if(fecha === pcTemp.fechaInicial)
+                {
+                  objectGlobal[fecha].dots.push(pc)
+                  x = 1 ;
+                }
+                else
+                {
+                  if (index2 === (response.data.pc.length-1) && x===0 && y === Object.keys(objectGlobal).length)
+                  {
+                    objectGlobal[`${pcTemp.fechaInicial}`] =  
+                    {
+                      marked:true,
+                      selected:false,
+                      dots:[pc]
+                    } 
+                  }
+                }
+                y++
+              }
+              
+            }
+            //Recorrido para c
+            for (let index3 = 0; index3 < response.data.c.length; index3++) 
+            {
+              let y = 1 //variable que aumenta
+              let x = 0; //variable para validar
+              const cTemp = response.data.c[index3];
+              //console.log(cTemp)
+              let newDate =  cTemp.created_at.toString(); //substring(0,10);
+              let dateAComparar = newDate.substring(0,10);
+  
+              //console.log(dateAComparar)
+  
+              for(let clave in objectGlobal)
+              {
+                if(clave === dateAComparar)
+                {
+                  objectGlobal[clave].dots.push({color:'#56D0C1'})
+                  x = 1 ;
+                }
+                else
+                {
+                  if (index3 === (response.data.c.length-1) && x===0 && y === Object.keys(objectGlobal).length)
+                  {
+                    objectGlobal[`${dateAComparar}`] =  
+                    {
+                      marked:true,
+                      selected:false,
+                      dots:[c]
+                    } 
+                  }  
+                }
+                y++
+              }
+        
             }
           }
-        }
-
-        for (let index4 = 0; index4 < response.data.c.length; index4++)
-        {
-          const cTemp = response.data.c[index4];
-          //console.log(cTemp.created_at.substring(0,10))
-          for(let fecha in objectGlobal)
-          {
-            //console.log(fecha)
-          }
-          
-        }
-
+          //Seteo de datos
+          //console.log(objectGlobal)
           setDataCalendar(objectGlobal)
-          
         }).catch(err => {
           console.log(err)
         })
