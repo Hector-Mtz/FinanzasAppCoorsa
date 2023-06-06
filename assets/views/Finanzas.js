@@ -147,7 +147,7 @@ const Finanzas = (
     //Solicitud de datos por mes
     const consultarPorMes = async () =>
     {
-      if(lineaNegocio == null || cliente == null  )
+      if(lineaNegocio == null &&  cliente == null  )
       {
         await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/getTotals',
         {
@@ -167,6 +167,7 @@ const Finanzas = (
       }
       else
       {
+        console.log(lineaNegocio)
       await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/getTotals',
       {
            params:{
@@ -187,16 +188,18 @@ const Finanzas = (
         }
     }
     //Solicitud de datos de fecha
-    const consultaCalendario = async (date) => 
+    const consultaCalendario = async (date, lineaNegocio_id, cliente_id) => 
     {
-      //console.log(date)
+      //console.log(date +' - '+lineaNegocio_id +' - '+cliente_id)
       await axios.get('https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/getDataCalendar',{
         params:{
-          date:date
+          date:date,
+          linea_negocio_id: lineaNegocio_id,
+          cliente_id:cliente_id
         }
       }).then(response => 
         {
-          //console.log(response);
+          console.log(response);
           let objectGlobal = {};
           if(response.data.ventas.length === 0)
           {
@@ -415,11 +418,8 @@ const Finanzas = (
 
     useEffect(() =>
     {
-      if(lineaNegocio !== '')
-      {
          consultarInforInicio()
          consultarPorMes()
-      }
     },[lineaNegocio])
 
     useEffect(() => 
@@ -431,8 +431,8 @@ const Finanzas = (
     //useEffect para cambios y consulta de fechas
     useEffect(() => 
     {
-      consultaCalendario(dateCalendar)
-    },[dateCalendar])
+      consultaCalendario(dateCalendar, lineaNegocio, cliente)
+    },[dateCalendar,cliente,lineaNegocio])
     
   const sections = [
     {id:0, nombre: 'reportes'},

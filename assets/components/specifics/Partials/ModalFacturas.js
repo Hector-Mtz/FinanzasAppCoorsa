@@ -18,7 +18,7 @@ const ModalFacturas = (
             <View style={styles.modalStyle}>
                <View style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between', marginTop:10}}>
                   <View style={{flexDirection:'row', alignItems:'center'}} >
-                      <Pressable onPress={() => {
+                      <Pressable style={{width:30, height:30, alignItems:'center', justifyContent:'center'}} onPress={() => {
                          //modalPorPagar.setModalPorpagar(false)
                          modalFacturas.setModalFacturas(false)
                       }}>

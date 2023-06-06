@@ -23,7 +23,8 @@ const NavBar = ({
  
   return (
     <View style={styles.contenedor}> 
-      <Pressable onPress={() => {
+      <View></View>
+      <Pressable  onPress={() => {
          setShow(!show)
       }}>
         <Image source={require('../../img/icon_user.png')} />
@@ -45,8 +46,7 @@ const styles = StyleSheet.create({
     contenedor:
     {
       flexDirection:'row',
-      justifyContent:'flex-end',
-      marginLeft:280
+      marginLeft:210
     },
     text:{
       color:'white',

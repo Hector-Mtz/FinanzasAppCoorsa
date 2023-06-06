@@ -28,16 +28,50 @@ const DropDownItem = (
 
   useEffect(() => 
   {
+    //console.log(icon)
     //console.log(show)
      if(show) //mostramos
      {
-       Animated.timing(
-        animacion,{
-            toValue:1000,
-            duration:100,
-            useNativeDriver:false
-        }
-       ).start()
+      switch (icon) 
+      {
+        case 'calendar':
+            Animated.timing(
+             animacion,{
+                toValue:620,
+                duration:100,
+                useNativeDriver:false
+              }
+            ).start()
+          break;
+        case 'monedas':
+          Animated.timing(
+            animacion,{
+               toValue:970,
+               duration:100,
+               useNativeDriver:false
+             }
+           ).start()
+          break
+        case 'pago' :
+          Animated.timing(
+            animacion,{
+               toValue:650,
+               duration:100,
+               useNativeDriver:false
+             }
+           ).start()
+          break;
+        case 'deposito':
+          Animated.timing(
+            animacion,{
+               toValue:580,
+               duration:100,
+               useNativeDriver:false
+             }
+           ).start()
+          break
+      
+      }
      }
      if(!show) //ocultamos
      {

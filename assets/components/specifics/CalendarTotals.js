@@ -120,15 +120,20 @@ const CalendarTotals = (
                   let fechaAnterior = {};
                   setSelected(day.dateString)
                   fechaAnterior = dataCalendar[day.dateString]
-                  if(fechaAnterior == undefined)
+                  // console.log(change)
+                  if(fechaAnterior == undefined) //sino encuentra el dia dentro del array no hace nada
                   {
                     return null;
                   }
                   else
                   {
-                     setChange(!change)
-                    // console.log(change)
-                      fechaAnterior.selected = change
+                    fechaAnterior.selected =true
+                    if(dia !== '')
+                    {
+                        let fechAnteriorOld = dataCalendar[dia];
+                        //console.log(fechAnteriorOld)
+                        fechAnteriorOld.selected = false
+                    }
                   }
                                     
                   //console.log(day.dateString)

@@ -64,7 +64,7 @@ const ModalVentasPorPagar = (
             <View style={styles.modalStyle}>
                <View style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between', marginTop:10}}>
                   <View style={{flexDirection:'row', alignItems:'center'}} >
-                      <Pressable onPress={() => {
+                      <Pressable style={{width:30, height:30, alignItems:'center', justifyContent:'center'}} onPress={() => {
                          modalPorPagar.setModalPorpagar(false)
                       }}>
                         <Image style={{width:10, height:20}} source={require('../../img/arrow_left.png')} />
