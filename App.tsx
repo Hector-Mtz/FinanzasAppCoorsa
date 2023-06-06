@@ -6,9 +6,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { useNavigation } from '@react-navigation/native';
 
-
-
-
 import {
   ImageBackground,
   StyleSheet,
@@ -29,7 +26,7 @@ function App(): JSX.Element {
   
   return (
    <NavigationContainer>
-      <Drawer.Navigator id='menu' initialRouteName='Finanzas' defaultStatus='closed'  screenOptions={{
+      <Drawer.Navigator id='menu' initialRouteName='Login' defaultStatus='closed'  screenOptions={{
        drawerStyle:{
         backgroundColor:'#0A0F2C'
        },
