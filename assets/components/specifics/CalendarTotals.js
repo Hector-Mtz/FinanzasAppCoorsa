@@ -126,8 +126,8 @@ const CalendarTotals = (
                   }
                   else
                   {
-                    setChange(!change)
-                     console.log(change)
+                     setChange(!change)
+                    // console.log(change)
                       fechaAnterior.selected = change
                   }
                                     
