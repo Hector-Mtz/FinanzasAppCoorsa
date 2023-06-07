@@ -118,7 +118,7 @@ const ModalTypeMoveAll = (
                               {modalItem.title}
                           </Text>
                       </View>
-                      <Image source={require('../../../img/monedas_icon.png')} />
+                      <Image style={{width:50, height:40}} source={require('../../../img/monedas_icon.png')} />
                   </View>
                   <View>
                     {

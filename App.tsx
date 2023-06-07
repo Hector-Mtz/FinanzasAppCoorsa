@@ -42,6 +42,7 @@ function App(): JSX.Element {
           headerShown:false,
         }} name='Login' component={Login}   />
         <Drawer.Screen name='Finanzas'  options={
+
           {
             headerTitle: (props) => <NavBar  usuarioDatos={usuarioDatos} props={props} {...props} /> 
           }

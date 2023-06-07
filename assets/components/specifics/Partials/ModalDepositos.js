@@ -27,7 +27,7 @@ const ModalDepositos = (
                            Deposito
                         </Text>
                     </View>
-                    <Image source={require('../../../img/icon_deposito.png')} />
+                    <Image style={{width:50, height:50}} source={require('../../../img/icon_deposito.png')} />
                 </View>
                 <View style={{flexDirection:'row', marginTop:20}}>
                     <View style={styles.contenedorReferencia}>

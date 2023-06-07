@@ -71,7 +71,7 @@ const ModalVentasPorPagar = (
                       </Pressable>
                       <Text style={{color:'black', fontSize:23, marginLeft:15}}>Por pagar</Text>
                   </View>
-                  <Image source={require('../../img/monedas_icon.png')} />
+                  <Image style={{width:48, height:38}} source={require('../../img/monedas_icon.png')} />
                </View>
                <View style={{marginTop:15, flexDirection:'row', justifyContent:'space-between'}}>
                   <Text style={{color:'black', fontSize:12}}>

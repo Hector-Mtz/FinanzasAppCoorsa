@@ -93,22 +93,22 @@ const DropDownItem = (
             {title} 
          </Text>
         {icon === 'calendar' ? 
-         <Image source={require('../../img/calendario_icon.png')} />
+         <Image style={{width:40, height:40}} source={require('../../img/calendario_icon.png')} />
          :
          null
         }
         {icon === 'deposito' ? 
-         <Image source={require('../../img/icon_deposito.png')} />
+         <Image style={{width:50, height:50}}  source={require('../../img/icon_deposito.png')} />
          :
          null
         }
         {icon === 'monedas' ? 
-         <Image source={require('../../img/monedas_icon.png')} />
+         <Image style={{width:50, height:40}} source={require('../../img/monedas_icon.png')} />
          :
          null
         }
         {icon === 'pago' ? 
-         <Image source={require('../../img/pago_icon.png')} />
+         <Image style={{width:55, height:50}} source={require('../../img/pago_icon.png')} />
          :
          null
         }

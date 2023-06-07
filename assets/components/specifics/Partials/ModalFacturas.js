@@ -28,7 +28,7 @@ const ModalFacturas = (
                         Por pagar
                       </Text>
                   </View>
-                  <Image source={require('../../../img/pago_icon.png')} />
+                  <Image style={{width:42, height:40}} source={require('../../../img/pago_icon.png')} />
                </View>
                <View style={{flexDirection:'row', marginTop:20}}>
                   <View style={styles.facturaConenedor}>

@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react'
-import { Text, View, StyleSheet, Animated, Pressable } from 'react-native'
+import { Text, View, StyleSheet, Animated, Pressable,Image } from 'react-native'
 import {Calendar, LocaleConfig, Agenda, AgendaEntry, AgendaSchedule, DateData} from 'react-native-calendars';
 import testIds from '../../utils/testIds';
 import { formatoMoney } from '../../utils/conversiones';
 import axios from 'axios';
 import ModalTypeMoveAll from './Partials/ModalTypeMoveAll';
+import LeftArrow from '../generals/LeftArrow';
+import RightArrow from '../generals/RightArrow';
 
 const CalendarTotals = (
     {
@@ -106,6 +108,7 @@ const CalendarTotals = (
   //Variable para modal
   const [modalItem, setModalItem] = useState(false)
   const [title, setTitle] = useState('');
+  const left = 'left'
    
   return (
     <View>
@@ -113,6 +116,11 @@ const CalendarTotals = (
             show ? 
             <View>
                <Calendar
+                 renderArrow={left => 
+                   left === 'left' ?
+                     <LeftArrow />
+                   : <RightArrow />
+                }
                  markedDates={dataCalendar}
                  onDayPress={day => 
                 {

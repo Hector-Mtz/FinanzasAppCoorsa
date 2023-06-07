@@ -61,6 +61,7 @@ const DropDownClient = (
  },[show])
 
   const [showIndicator,setShowIndicator] = useState(false) 
+  const [cliente_id, setCliente_id] =useState(-1)
   const desplegar = async (id) => 
   {
     //console.log(id)
@@ -117,6 +118,7 @@ const DropDownClient = (
 
     if(item.type == 'Depositos')
     {
+      setCliente_id(id)
       await axios.get("https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/ingresoByClienteApi",
       {
         params:{
@@ -148,7 +150,9 @@ const DropDownClient = (
     //console.log(route)
     await axios.get(route,
     {
-      params:{} //aqui van los parametros como linea de negocio, etc para filtrar
+      params:{
+        cliente_id:cliente_id
+      } //aqui van los parametros como linea de negocio, etc para filtrar
     })
     .then(response => {
         // Handle response
@@ -187,288 +191,288 @@ const DropDownClient = (
         </View>
         :
         <View>
-              <View style={style.contenedor}>
-                <Text style={style.text}>{nombre}</Text>
-                <Pressable style={style.buttonDesplegable} onPress={() => {desplegar(id)}}>
-                    <Text style={style.textButton}>
-                        {total}
-                    </Text>
-                    <Image style={style.downArrow} source={require('../../img/down_arrow.png')} />
-                </Pressable>
-            </View>
-            <Animated.View style={{height:animacion}}>
+        <View style={style.contenedor}>
+          <Text style={style.text}>{nombre}</Text>
+          <Pressable style={style.buttonDesplegable} onPress={() => {desplegar(id)}}>
+              <Text style={style.textButton}>
+                  {total}
+              </Text>
+              <Image style={style.downArrow} source={require('../../img/down_arrow.png')} />
+          </Pressable>
+      </View>
+      <Animated.View style={{height:animacion}}>
+        {
+          show ? 
+            <View>
               {
-                show ? 
-                  <View>
-                    {
-                      showIndicator ?
-                        <ActivityIndicator />
-                      : null
-                    }
-                    {
-                      item.type == 'Ventas' ?
-                      <View>
-                        {
-                         ventas !== null ?        
-                         <View>
-                           <FlatList 
-                             scrollEnabled
-                             data={ventas.data}
-                             keyExtractor={(item) => item.id }
-                             renderItem={({item}) => 
+                showIndicator ?
+                  <ActivityIndicator />
+                : null
+              }
+              {
+                item.type == 'Ventas' ?
+                <View>
+                  {
+                   ventas !== null ?        
+                   <View>
+                     <FlatList 
+                       scrollEnabled
+                       data={ventas.data}
+                       keyExtractor={(item) => item.id }
+                       renderItem={({item}) => 
+                      {
+                        return (
+                         <View style={style.contenedorItemClient}>
+                              <Text style={{color:'black'}}>
+                               {item.ceco + ' - ' + item.servicio}
+                               </Text>
+                              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                                 <Text style={{color:'black'}}>{item.fechaInicial}</Text>
+                                 <ButtonWatch itemType={itemType} modalPorPagar={modalPorPagar} setModalPorpagar={setModalPorpagar} setItemAMostrar={setItemAMostrar} id={item.id} />
+                              </View>
+                              {
+                                ItemAMostrar === item.id ?
+                                  <ModalVentasPorPagar modalPorPagar={modalPorPagar} setModalPorpagar={setModalPorpagar} item={item} />
+                                  : null
+                              }
+                         </View>   
+                        )
+                      }}
+                  />
+                     <View style={{flexDirection:'row'}}>
+                         <View style={{flexDirection:'row', alignItems:'center'}}>
+                           {
+                             ventas.current_page == 1 ?
+                              <View style={{flexDirection:'row', alignItems:'center'}}>
+                                <View style = {{ marginHorizontal:6}} >
+                                 <Image style={[style.arrow, {opacity:0.5}]} source={require('../../img/double_arrow_left_gray.png')} />
+                               </View>
+                               <View>
+                                   <Image style={[style.arrow, {opacity:0.5}]} source={require('../../img/arrow_gray.png')} />
+                               </View>
+                              </View>
+                             :
+                              <View style={{flexDirection:'row', alignItems:'center'}}>
+                                <Pressable style = {{ marginHorizontal:6}}  onPress={() => {
+                                   changePage(ventas.first_page_url)
+                                }}>
+                                 <Image style={style.arrow} source={require('../../img/double_arrow_left_gray.png')} />
+                               </Pressable>
+                                <Pressable onPress={() => {
+                                   changePage(ventas.prev_page_url)
+                                  }} >
+                                    <Image style={style.arrow} source={require('../../img/arrow_gray.png')} />
+                                </Pressable>
+                              </View>
+                           }
+                         </View>
+                         <View style={{width:25, alignItems:'center', borderWidth:0.5 , borderColor:'#C3C3C3', marginHorizontal:5}}>
+                           <Text style={{color:'black'}} >{JSON.stringify(ventas.current_page)}</Text>
+                         </View>
+                          <Text style={{color:'black'}}>
+                              de 
+                              <Text> {ventas.last_page}</Text>
+                           </Text>
+                         <View style={{flexDirection:'row', alignItems:'center' }}>
+                            <Pressable style = {{ marginHorizontal:6}}  onPress={() => {
+                               changePage(ventas.next_page_url)
+                            }}>
+                               <Image  style={style.arrow}  source={require('../../img/arrow_right_gray.png')} />
+                            </Pressable>
+                            <Pressable onPress={() => {
+                               changePage(ventas.last_page_url)
+                             }}>
+                               <Image style={style.arrow} source={require('../../img/double_arrow_right_gray.png')} />
+                            </Pressable>
+                         </View>
+                     </View>
+                   </View>
+                   :
+                   <View>
+                      <Text>No hay registros</Text>
+                   </View>
+               }
+                </View>
+                : null
+              }
+              {
+                item.type == 'Facturas' ? 
+                <View>
+                   {
+                    facturas !== null ?
+                    <View>
+                      <FlatList 
+                      scrollEnabled
+                      data={facturas.data}
+                      keyExtractor={(item) => item.id }
+                      renderItem={({item}) => 
+                      {
+                        return (
+                         <View style={style.contenedorItemClient}>
+                            <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                              <Text style={{color:'black',textTransform:'uppercase'}} >#{item.referencia}</Text>
+                              <ButtonWatch itemType={itemType} modalPorPagar={modalPorPagar}  setModalFacturas={setModalFacturas} setItemAMostrar={setItemAMostrar} id={item.id} />
+                            </View>
                             {
-                              return (
-                               <View style={style.contenedorItemClient}>
-                                    <Text style={{color:'black'}}>
-                                     {item.ceco + ' - ' + item.servicio}
-                                     </Text>
-                                    <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                                       <Text style={{color:'black'}}>{item.fechaInicial}</Text>
-                                       <ButtonWatch itemType={itemType} modalPorPagar={modalPorPagar} setModalPorpagar={setModalPorpagar} setItemAMostrar={setItemAMostrar} id={item.id} />
-                                    </View>
-                                    {
-                                      ItemAMostrar === item.id ?
-                                        <ModalVentasPorPagar modalPorPagar={modalPorPagar} setModalPorpagar={setModalPorpagar} item={item} />
-                                        : null
-                                    }
-                               </View>   
-                              )
-                            }}
-                        />
-                           <View style={{flexDirection:'row'}}>
-                               <View style={{flexDirection:'row', alignItems:'center'}}>
-                                 {
-                                   ventas.current_page == 1 ?
-                                    <View style={{flexDirection:'row', alignItems:'center'}}>
-                                      <View style = {{ marginHorizontal:6}} >
-                                       <Image style={[style.arrow, {opacity:0.5}]} source={require('../../img/double_arrow_left_gray.png')} />
-                                     </View>
-                                     <View>
-                                         <Image style={[style.arrow, {opacity:0.5}]} source={require('../../img/arrow_gray.png')} />
-                                     </View>
-                                    </View>
-                                   :
-                                    <View style={{flexDirection:'row', alignItems:'center'}}>
-                                      <Pressable style = {{ marginHorizontal:6}}  onPress={() => {
-                                         changePage(ventas.first_page_url)
-                                      }}>
-                                       <Image style={style.arrow} source={require('../../img/double_arrow_left_gray.png')} />
-                                     </Pressable>
-                                      <Pressable onPress={() => {
-                                         changePage(ventas.prev_page_url)
-                                        }} >
-                                          <Image style={style.arrow} source={require('../../img/arrow_gray.png')} />
-                                      </Pressable>
-                                    </View>
-                                 }
+                               ItemAMostrar === item.id ?
+                                 <ModalFacturas modalFacturas={modalFacturas} setModalFacturas={setModalFacturas} item={item} />
+                              : null
+                            }
+                         </View>   
+                        )
+                      }}
+                      />
+                      <View style={{flexDirection:'row'}}>
+                         <View style={{flexDirection:'row', alignItems:'center'}}>
+                           {
+                             facturas.current_page == 1 ?
+                              <View style={{flexDirection:'row', alignItems:'center'}}>
+                                <View style = {{ marginHorizontal:6}} >
+                                 <Image style={[style.arrow, {opacity:0.5}]} source={require('../../img/double_arrow_left_gray.png')} />
                                </View>
-                               <View style={{width:25, alignItems:'center', borderWidth:0.5 , borderColor:'#C3C3C3', marginHorizontal:5}}>
-                                 <Text style={{color:'black'}} >{JSON.stringify(ventas.current_page)}</Text>
+                               <View>
+                                   <Image style={[style.arrow, {opacity:0.5}]} source={require('../../img/arrow_gray.png')} />
                                </View>
-                                <Text style={{color:'black'}}>
-                                    de 
-                                    <Text> {ventas.last_page}</Text>
-                                 </Text>
-                               <View style={{flexDirection:'row', alignItems:'center' }}>
-                                  <Pressable style = {{ marginHorizontal:6}}  onPress={() => {
-                                     changePage(ventas.next_page_url)
-                                  }}>
-                                     <Image  style={style.arrow}  source={require('../../img/arrow_right_gray.png')} />
-                                  </Pressable>
-                                  <Pressable onPress={() => {
-                                     changePage(ventas.last_page_url)
-                                   }}>
-                                     <Image style={style.arrow} source={require('../../img/double_arrow_right_gray.png')} />
-                                  </Pressable>
-                               </View>
-                           </View>
+                              </View>
+                             :
+                              <View style={{flexDirection:'row', alignItems:'center'}}>
+                                <Pressable style = {{ marginHorizontal:6}}  onPress={() => {
+                                   changePage(facturas.first_page_url)
+                                }}>
+                                 <Image style={style.arrow} source={require('../../img/double_arrow_left_gray.png')} />
+                               </Pressable>
+                                <Pressable onPress={() => {
+                                   changePage(facturas.prev_page_url)
+                                  }} >
+                                    <Image style={style.arrow} source={require('../../img/arrow_gray.png')} />
+                                </Pressable>
+                              </View>
+                           }
                          </View>
-                         :
-                         <View>
-                            <Text>No hay registros</Text>
+                         <View style={{width:25, alignItems:'center', borderWidth:0.5 , borderColor:'#C3C3C3', marginHorizontal:5}}>
+                           <Text style={{color:'black'}} >{JSON.stringify(facturas.current_page)}</Text>
                          </View>
-                     }
+                          <Text style={{color:'black'}}>
+                              de 
+                              <Text> {facturas.last_page}</Text>
+                           </Text>
+                         <View style={{flexDirection:'row', alignItems:'center' }}>
+                            <Pressable style = {{ marginHorizontal:6}}  onPress={() => {
+                               changePage(facturas.next_page_url)
+                            }}>
+                               <Image  style={style.arrow}  source={require('../../img/arrow_right_gray.png')} />
+                            </Pressable>
+                            <Pressable onPress={() => {
+                               changePage(facturas.last_page_url)
+                             }}>
+                               <Image style={style.arrow} source={require('../../img/double_arrow_right_gray.png')} />
+                            </Pressable>
+                         </View>
                       </View>
-                      : null
-                    }
-                    {
-                      item.type == 'Facturas' ? 
-                      <View>
-                         {
-                          facturas !== null ?
-                          <View>
-                            <FlatList 
+                    </View>
+                    :
+                    <View>
+                      <Text>No hay facturas por mostrar</Text>
+                    </View>
+                   }
+                </View>
+                : null
+              }
+              {
+                 item.type == 'Depositos' ?
+                 <View>
+                   {
+                     depositos !== null ?
+                     <View>
+                           <FlatList 
                             scrollEnabled
-                            data={facturas.data}
+                            data={depositos.data}
                             keyExtractor={(item) => item.id }
                             renderItem={({item}) => 
-                            {
-                              return (
-                               <View style={style.contenedorItemClient}>
-                                  <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                                    <Text style={{color:'black',textTransform:'uppercase'}} >#{item.referencia}</Text>
-                                    <ButtonWatch itemType={itemType} modalPorPagar={modalPorPagar}  setModalFacturas={setModalFacturas} setItemAMostrar={setItemAMostrar} id={item.id} />
-                                  </View>
-                                  {
-                                     ItemAMostrar === item.id ?
-                                       <ModalFacturas modalFacturas={modalFacturas} setModalFacturas={setModalFacturas} item={item} />
-                                    : null
-                                  }
-                               </View>   
-                              )
-                            }}
-                            />
-                            <View style={{flexDirection:'row'}}>
-                               <View style={{flexDirection:'row', alignItems:'center'}}>
-                                 {
-                                   facturas.current_page == 1 ?
-                                    <View style={{flexDirection:'row', alignItems:'center'}}>
-                                      <View style = {{ marginHorizontal:6}} >
-                                       <Image style={[style.arrow, {opacity:0.5}]} source={require('../../img/double_arrow_left_gray.png')} />
-                                     </View>
-                                     <View>
-                                         <Image style={[style.arrow, {opacity:0.5}]} source={require('../../img/arrow_gray.png')} />
-                                     </View>
-                                    </View>
-                                   :
-                                    <View style={{flexDirection:'row', alignItems:'center'}}>
-                                      <Pressable style = {{ marginHorizontal:6}}  onPress={() => {
-                                         changePage(facturas.first_page_url)
-                                      }}>
-                                       <Image style={style.arrow} source={require('../../img/double_arrow_left_gray.png')} />
-                                     </Pressable>
-                                      <Pressable onPress={() => {
-                                         changePage(facturas.prev_page_url)
-                                        }} >
-                                          <Image style={style.arrow} source={require('../../img/arrow_gray.png')} />
-                                      </Pressable>
-                                    </View>
-                                 }
-                               </View>
-                               <View style={{width:25, alignItems:'center', borderWidth:0.5 , borderColor:'#C3C3C3', marginHorizontal:5}}>
-                                 <Text style={{color:'black'}} >{JSON.stringify(facturas.current_page)}</Text>
-                               </View>
-                                <Text style={{color:'black'}}>
-                                    de 
-                                    <Text> {facturas.last_page}</Text>
-                                 </Text>
-                               <View style={{flexDirection:'row', alignItems:'center' }}>
-                                  <Pressable style = {{ marginHorizontal:6}}  onPress={() => {
-                                     changePage(facturas.next_page_url)
-                                  }}>
-                                     <Image  style={style.arrow}  source={require('../../img/arrow_right_gray.png')} />
-                                  </Pressable>
-                                  <Pressable onPress={() => {
-                                     changePage(facturas.last_page_url)
-                                   }}>
-                                     <Image style={style.arrow} source={require('../../img/double_arrow_right_gray.png')} />
-                                  </Pressable>
-                               </View>
-                            </View>
-                          </View>
-                          :
-                          <View>
-                            <Text>No hay facturas por mostrar</Text>
-                          </View>
-                         }
-                      </View>
-                      : null
-                    }
-                    {
-                       item.type == 'Depositos' ?
-                       <View>
-                         {
-                           depositos !== null ?
-                           <View>
-                                 <FlatList 
-                                  scrollEnabled
-                                  data={depositos.data}
-                                  keyExtractor={(item) => item.id }
-                                  renderItem={({item}) => 
-                                 {
-                                   return (
-                                    <View style={style.contenedorItemClient}>
-                                        <Text style={{color:'black'}}>
-                                          #{item.nombre}
-                                         </Text>
-                                         <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:6}}> 
-                                            <Text style={{color:'black'}}>Cantidad: ${formatoMoney(item.cantidad.toFixed(2))}</Text>
-                                            <View>
-                                              <ButtonWatch itemType={itemType} modalPorPagar={modalPorPagar} setModalDepositos={setModalDepositos} setItemAMostrar={setItemAMostrar} id={item.id} />
-                                            </View>
-                                            {
-                                              ItemAMostrar === item.id ?
-                                              <View>
-                                                  <ModalDepositos modalDepositos={modalDepositos} setModalDepositos={setModalDepositos} item={item} />
-                                              </View>
-                                              : null
-                                            }
-                                         </View>
-                                    </View>   
-                                   )
-                                 }}
-                              />               
-                              <View style={{flexDirection:'row'}}>
-                                  <View style={{flexDirection:'row', alignItems:'center'}}>
-                                    {
-                                      depositos.current_page == 1 ?
-                                       <View style={{flexDirection:'row', alignItems:'center'}}>
-                                         <View style = {{ marginHorizontal:6}} >
-                                          <Image style={[style.arrow, {opacity:0.5}]} source={require('../../img/double_arrow_left_gray.png')} />
-                                        </View>
+                           {
+                             return (
+                              <View style={style.contenedorItemClient}>
+                                  <Text style={{color:'black'}}>
+                                    #{item.nombre}
+                                   </Text>
+                                   <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:6}}> 
+                                      <Text style={{color:'black'}}>Cantidad: ${formatoMoney(item.cantidad.toFixed(2))}</Text>
+                                      <View>
+                                        <ButtonWatch itemType={itemType} modalPorPagar={modalPorPagar} setModalDepositos={setModalDepositos} setItemAMostrar={setItemAMostrar} id={item.id} />
+                                      </View>
+                                      {
+                                        ItemAMostrar === item.id ?
                                         <View>
-                                            <Image style={[style.arrow, {opacity:0.5}]} source={require('../../img/arrow_gray.png')} />
+                                            <ModalDepositos modalDepositos={modalDepositos} setModalDepositos={setModalDepositos} item={item} />
                                         </View>
-                                       </View>
-                                      :
-                                       <View style={{flexDirection:'row', alignItems:'center'}}>
-                                         <Pressable style = {{ marginHorizontal:6}}  onPress={() => {
-                                            changePage(depositos.first_page_url)
-                                         }}>
-                                          <Image style={style.arrow} source={require('../../img/double_arrow_left_gray.png')} />
-                                        </Pressable>
-                                         <Pressable onPress={() => {
-                                            changePage(depositos.prev_page_url)
-                                           }} >
-                                             <Image style={style.arrow} source={require('../../img/arrow_gray.png')} />
-                                         </Pressable>
-                                       </View>
-                                    }
+                                        : null
+                                      }
+                                   </View>
+                              </View>   
+                             )
+                           }}
+                        />               
+                        <View style={{flexDirection:'row'}}>
+                            <View style={{flexDirection:'row', alignItems:'center'}}>
+                              {
+                                depositos.current_page == 1 ?
+                                 <View style={{flexDirection:'row', alignItems:'center'}}>
+                                   <View style = {{ marginHorizontal:6}} >
+                                    <Image style={[style.arrow, {opacity:0.5}]} source={require('../../img/double_arrow_left_gray.png')} />
                                   </View>
-                                  <View style={{width:25, alignItems:'center', borderWidth:0.5 , borderColor:'#C3C3C3', marginHorizontal:5}}>
-                                    <Text style={{color:'black'}} >{JSON.stringify(depositos.current_page)}</Text>
+                                  <View>
+                                      <Image style={[style.arrow, {opacity:0.5}]} source={require('../../img/arrow_gray.png')} />
                                   </View>
-                                   <Text style={{color:'black'}}>
-                                       de 
-                                       <Text> {depositos.last_page}</Text>
-                                    </Text>
-                                  <View style={{flexDirection:'row', alignItems:'center' }}>
-                                     <Pressable style = {{ marginHorizontal:6}}  onPress={() => {
-                                        changePage(depositos.next_page_url)
-                                     }}>
-                                        <Image  style={style.arrow}  source={require('../../img/arrow_right_gray.png')} />
-                                     </Pressable>
-                                     <Pressable onPress={() => {
-                                        changePage(depositos.last_page_url)
-                                      }}>
-                                        <Image style={style.arrow} source={require('../../img/double_arrow_right_gray.png')} />
-                                     </Pressable>
-                                  </View>
-                              </View>
-                           </View>
-                           :
-                           <View>
-                             <Text>No hay registros</Text>
-                           </View>
-                         }
-                       </View>
-                       :
-                       null
-                    }
-                  </View>
-                :null
+                                 </View>
+                                :
+                                 <View style={{flexDirection:'row', alignItems:'center'}}>
+                                   <Pressable style = {{ marginHorizontal:6}}  onPress={() => {
+                                      changePage(depositos.first_page_url)
+                                   }}>
+                                    <Image style={style.arrow} source={require('../../img/double_arrow_left_gray.png')} />
+                                  </Pressable>
+                                   <Pressable onPress={() => {
+                                      changePage(depositos.prev_page_url)
+                                     }} >
+                                       <Image style={style.arrow} source={require('../../img/arrow_gray.png')} />
+                                   </Pressable>
+                                 </View>
+                              }
+                            </View>
+                            <View style={{width:25, alignItems:'center', borderWidth:0.5 , borderColor:'#C3C3C3', marginHorizontal:5}}>
+                              <Text style={{color:'black'}} >{JSON.stringify(depositos.current_page)}</Text>
+                            </View>
+                             <Text style={{color:'black'}}>
+                                 de 
+                                 <Text> {depositos.last_page}</Text>
+                              </Text>
+                            <View style={{flexDirection:'row', alignItems:'center' }}>
+                               <Pressable style = {{ marginHorizontal:6}}  onPress={() => {
+                                  changePage(depositos.next_page_url)
+                               }}>
+                                  <Image  style={style.arrow}  source={require('../../img/arrow_right_gray.png')} />
+                               </Pressable>
+                               <Pressable onPress={() => {
+                                  changePage(depositos.last_page_url)
+                                }}>
+                                  <Image style={style.arrow} source={require('../../img/double_arrow_right_gray.png')} />
+                               </Pressable>
+                            </View>
+                        </View>
+                     </View>
+                     :
+                     <View>
+                       <Text>No hay registros</Text>
+                     </View>
+                   }
+                 </View>
+                 :
+                 null
               }
-            </Animated.View>
+            </View>
+          :null
+        }
+      </Animated.View>
         </View>
       }
     </View>
@@ -507,7 +511,9 @@ const style = StyleSheet.create({
     },
     downArrow:
     {
-        marginLeft:15
+        marginLeft:15,
+        width:14,
+        height:10
     },
     contenedorItemClient:
     {

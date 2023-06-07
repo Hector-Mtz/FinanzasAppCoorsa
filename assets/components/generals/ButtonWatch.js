@@ -31,7 +31,7 @@ const ButtonWatch = (
          modalPorPagar.setModalDepositos(true)
       }
     }}>
-       <Image source={require('../../img/eye.png')} />
+       <Image style={{width:20, height:12}} source={require('../../img/eye.png')} />
     </Pressable>
   )
 }

@@ -22,23 +22,22 @@ const NavBar = ({
   }
  
   return (
-    <View style={styles.contenedor}> 
-      <View></View>
-      <Pressable  onPress={() => {
-         setShow(!show)
-      }}>
-        <Image source={require('../../img/icon_user.png')} />
-      </Pressable>
-      {show ?
-      <View style={styles.logout} >
-          <Pressable onPress={() => {
-             logOut()
-          }}>
-             <Text style={{color:'black'}}>Salir</Text>
-          </Pressable>
-      </View> 
-      : null}
-    </View>
+       <View style={styles.contenedor}> 
+         <Pressable  onPress={() => {
+            setShow(!show)
+         }}>
+           <Image source={require('../../img/icon_user.png')} />
+         </Pressable>
+         {show ?
+         <View style={styles.logout} >
+             <Pressable onPress={() => {
+                logOut()
+             }}>
+                <Text style={{color:'black'}}>Salir</Text>
+             </Pressable>
+         </View> 
+         : null}
+       </View>
   )
 }
 
@@ -46,7 +45,7 @@ const styles = StyleSheet.create({
     contenedor:
     {
       flexDirection:'row',
-      marginLeft:210
+      marginLeft:260
     },
     text:{
       color:'white',
