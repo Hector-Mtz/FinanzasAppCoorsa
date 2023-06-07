@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     },
     pdf: 
     {
-        width:360,
-        height:470,
+        width:290,
+        height:380,
     }
 });

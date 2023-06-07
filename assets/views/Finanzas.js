@@ -261,7 +261,7 @@ const Finanzas = (
               {
                 if(fecha === pcTemp.fechaInicial)
                 {
-                  objectGlobal[fecha].dots.push(pc)
+                  objectGlobal[fecha].dots.push({color: '#697FEA'})
                   x = 1 ;
                 }
                 else
@@ -480,7 +480,7 @@ const Finanzas = (
 
           }
           //Seteo de datos
-          console.log(objectGlobal)
+          //console.log(objectGlobal)
           setDataCalendar(objectGlobal)
         }).catch(err => {
           console.log(err)

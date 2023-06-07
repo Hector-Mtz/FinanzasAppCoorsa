@@ -27,7 +27,7 @@ const ModalDocumento = (
                           Documento
                       </Text>
                </View>
-               <View style={{marginTop:5}}>
+               <View style={{marginTop:50}}>
                   <ViewDocument documento={modalDocs.documento} />
                </View>
             </View>

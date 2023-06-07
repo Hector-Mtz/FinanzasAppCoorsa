@@ -258,13 +258,13 @@ const ModalTypeMoveAll = (
                                     return (
                                      <View style={{flexDirection:'row', justifyContent:'space-between', borderBottomColor:'#C6C6C6', borderBottomWidth:0.5, paddingVertical:15}}>
                                         <View>
-                                            <Text style={styles.itemText,{fontSize:10}}>{item.nombre}</Text>
+                                            <Text style={styles.itemText,{fontSize:10, color:'black'}}>{item.nombre}</Text>
                                         </View>
                                         <View>
-                                            <Text style={styles.itemText, {fontSize:10}}>$ {formatoMoney(item.cantidad.toFixed(2))}</Text>
+                                            <Text style={styles.itemText, {fontSize:10, color:'black'}}>$ {formatoMoney(item.cantidad.toFixed(2))}</Text>
                                         </View>
                                         <View>
-                                            <Text style={styles.itemText, {fontSize:10}}>{item.venta}</Text>
+                                            <Text style={styles.itemText, {fontSize:10, color:'black'}}>{item.venta}</Text>
                                         </View>
                                         <View>
                                           {

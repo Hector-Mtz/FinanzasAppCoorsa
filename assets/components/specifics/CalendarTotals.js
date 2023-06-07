@@ -120,6 +120,7 @@ const CalendarTotals = (
                   let fechaAnterior = {};
                   setSelected(day.dateString)
                   fechaAnterior = dataCalendar[day.dateString]
+                  console.log(fechaAnterior)
                   // console.log(change)
                   if(fechaAnterior == undefined) //sino encuentra el dia dentro del array no hace nada
                   {
@@ -152,6 +153,9 @@ const CalendarTotals = (
               {
                 selected !== '' ?
                 <View >
+                   <Text style={{color:'black', fontSize:20, textAlign:'center', fontWeight:'600'}}>
+                     Día seleccionado: {selected}
+                   </Text>
                  <View style={styles.contenedorFecha}>
                   <Text style={styles.fechaSeleccionada}>
                     {selected.dateString}
