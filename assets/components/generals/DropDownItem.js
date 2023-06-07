@@ -37,7 +37,7 @@ const DropDownItem = (
         case 'calendar':
             Animated.timing(
              animacion,{
-                toValue:620,
+                toValue:660,
                 duration:100,
                 useNativeDriver:false
               }

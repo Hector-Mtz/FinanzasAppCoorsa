@@ -14,6 +14,7 @@ import {
 } from 'react-native'
 import Reportes from '../components/specifics/Reportes'
 import DropDownItem from '../components/generals/DropDownItem'
+import ViewDocument from '../components/generals/ViewDocument';
 const Finanzas = (
   {
     
@@ -199,7 +200,7 @@ const Finanzas = (
         }
       }).then(response => 
         {
-          console.log(response);
+          //console.log(response);
           let objectGlobal = {};
           if(response.data.ventas.length === 0)
           {
@@ -293,106 +294,193 @@ const Finanzas = (
                 dots:[ventas]
               } 
             }
-            
-            //Recorrido para pp
-            for (let index = 0; index < response.data.pp.length; index++)
-            {
-               let y = 1
-               let x = 0;
-               const ppTemp = response.data.pp[index];
-               //console.log(ppTemp.fechaDePago)
-               for(let clave in objectGlobal)
-               {
-                //console.log(index)
-                //console.log(response.data.pp.length)
-                  if(ppTemp.fechaDePago === clave)
-                  {
-                    objectGlobal[clave].dots.push(pp);
-                    x = 1  
-                  }
-                  else
-                  {
-                    if (index === (response.data.pp.length-1) && x===0 && y === Object.keys(objectGlobal).length)
-                    {
-                      objectGlobal[`${ppTemp.fechaDePago}`] =  
+             //Recorrido para pp
+             if(response.data.pp.length > 0)
+             {
+                for (let index = 0; index < response.data.pp.length; index++)
+                {
+                   let y = 1
+                   let x = 0;
+                   const ppTemp = response.data.pp[index];
+                   //console.log(ppTemp.fechaDePago)
+                   for(let clave in objectGlobal)
+                   {
+                    //console.log(index)
+                    //console.log(response.data.pp.length)
+                      if(ppTemp.fechaDePago === clave)
                       {
-                        marked:true,
-                        selected:false,
-                        dots:[pp]
+                        objectGlobal[clave].dots.push(pp);
+                        x = 1  
+                      }
+                      else
+                      {
+                        if (index === (response.data.pp.length-1) && x===0 && y === Object.keys(objectGlobal).length)
+                        {
+                          objectGlobal[`${ppTemp.fechaDePago}`] =  
+                          {
+                            marked:true,
+                            selected:false,
+                            dots:[pp]
+                          } 
+                        }
+                        }        
+                      y++
+                    //console.log(y)
+                   }
+                }
+             }
+
+             if(response.data.pc.length > 0)
+             {
+               for (let index2 = 0; index2 < response.data.pc.length; index2++) 
+               {
+                 let y = 1 //variable que aumenta
+                 let x = 0; //variable para validar
+                 const pcTemp = response.data.pc[index2];
+                 for(let fecha in objectGlobal)
+                  {
+                    if(fecha === pcTemp.fechaInicial)
+                    {
+                      objectGlobal[fecha].dots.push({color: '#697FEA'})
+                      x = 1 ;
+                    }
+                    else
+                    {
+                      if (index2 === (response.data.pc.length-1) && x===0 && y === Object.keys(objectGlobal).length)
+                      {
+                        objectGlobal[`${pcTemp.fechaInicial}`] =  
+                        {
+                          marked:true,
+                          selected:false,
+                          dots:[pc]
+                        } 
+                      }
+                    }
+                    y++
+                  }
+               }
+             }
+
+             if(response.data.c.length >0)
+             {
+                //Recorrido para c
+                for (let index3 = 0; index3 < response.data.c.length; index3++) 
+                {
+                  let y = 1 //variable que aumenta
+                  let x = 0; //variable para validar
+                  const cTemp = response.data.c[index3];
+                  //console.log(cTemp)
+                  let newDate =  cTemp.created_at.toString(); //substring(0,10);
+                  let dateAComparar = newDate.substring(0,10);
+                
+                  console.log(dateAComparar)
+                
+                  for(let clave in objectGlobal)
+                  {
+                    if(clave === dateAComparar)
+                    {
+                      console.log(clave)
+                      objectGlobal[clave].dots.push({color:'#56D0C1'})
+                      x = 1 ;
+                    }
+                    else
+                    {
+                      if (index3 === (response.data.c.length-1) && x===0 && y === Object.keys(objectGlobal).length)
+                      {
+                        objectGlobal[`${dateAComparar}`] =  
+                        {
+                          marked:true,
+                          selected:false,
+                          dots:[c]
+                        } 
                       } 
                     }
-                    }        
-                  y++
-                //console.log(y)
-               }
-            }
-            //Recorrido pc
-            for (let index2 = 0; index2 < response.data.pc.length; index2++) 
-            {
-              let y = 1 //variable que aumenta
-              let x = 0; //variable para validar
-              const pcTemp = response.data.pc[index2];
-              for(let fecha in objectGlobal)
-              {
-                if(fecha === pcTemp.fechaInicial)
+                    y++
+                   }
+                 }
+             }
+
+             /*
+            
+             
+             if(response.data.pc.length > 0)
+             {
+                  //Recorrido pc
+                for (let index2 = 0; index2 < response.data.pc.length; index2++) 
                 {
-                  objectGlobal[fecha].dots.push(pc)
-                  x = 1 ;
-                }
-                else
-                {
-                  if (index2 === (response.data.pc.length-1) && x===0 && y === Object.keys(objectGlobal).length)
+                  let y = 1 //variable que aumenta
+                  let x = 0; //variable para validar
+                  const pcTemp = response.data.pc[index2];
+                  for(let fecha in objectGlobal)
                   {
-                    objectGlobal[`${pcTemp.fechaInicial}`] =  
+                    if(fecha === pcTemp.fechaInicial)
                     {
-                      marked:true,
-                      selected:false,
-                      dots:[pc]
-                    } 
+                      objectGlobal[fecha].dots.push(pc)
+                      x = 1 ;
+                    }
+                    else
+                    {
+                      if (index2 === (response.data.pc.length-1) && x===0 && y === Object.keys(objectGlobal).length)
+                      {
+                        objectGlobal[`${pcTemp.fechaInicial}`] =  
+                        {
+                          marked:true,
+                          selected:false,
+                          dots:[pc]
+                        } 
+                      }
+                    }
+                    y++
                   }
+                  
                 }
-                y++
-              }
-              
-            }
-            //Recorrido para c
-            for (let index3 = 0; index3 < response.data.c.length; index3++) 
-            {
-              let y = 1 //variable que aumenta
-              let x = 0; //variable para validar
-              const cTemp = response.data.c[index3];
-              //console.log(cTemp)
-              let newDate =  cTemp.created_at.toString(); //substring(0,10);
-              let dateAComparar = newDate.substring(0,10);
-  
-              //console.log(dateAComparar)
-  
-              for(let clave in objectGlobal)
-              {
-                if(clave === dateAComparar)
-                {
-                  objectGlobal[clave].dots.push({color:'#56D0C1'})
-                  x = 1 ;
-                }
-                else
-                {
-                  if (index3 === (response.data.c.length-1) && x===0 && y === Object.keys(objectGlobal).length)
-                  {
-                    objectGlobal[`${dateAComparar}`] =  
-                    {
-                      marked:true,
-                      selected:false,
-                      dots:[c]
-                    } 
-                  }  
-                }
-                y++
-              }
-        
-            }
+             }
+             */
+
+             /*
+             if(response.data.c.length > 0 )
+             {
+                //Recorrido para c
+                 for (let index3 = 0; index3 < response.data.c.length; index3++) 
+                 {
+                   let y = 1 //variable que aumenta
+                   let x = 0; //variable para validar
+                   const cTemp = response.data.c[index3];
+                   //console.log(cTemp)
+                   let newDate =  cTemp.created_at.toString(); //substring(0,10);
+                   let dateAComparar = newDate.substring(0,10);
+                 
+                   //console.log(dateAComparar)
+                 
+                   for(let clave in objectGlobal)
+                   {
+                     if(clave === dateAComparar)
+                     {
+                       objectGlobal[clave].dots.push({color:'#56D0C1'})
+                       x = 1 ;
+                     }
+                     else
+                     {
+                       if (index3 === (response.data.c.length-1) && x===0 && y === Object.keys(objectGlobal).length)
+                       {
+                         objectGlobal[`${dateAComparar}`] =  
+                         {
+                           marked:true,
+                           selected:false,
+                           dots:[c]
+                         } 
+                       }  
+                     }
+                     y++
+                   }
+                 
+                 }
+             }
+             */
+
           }
           //Seteo de datos
-          //console.log(objectGlobal)
+          console.log(objectGlobal)
           setDataCalendar(objectGlobal)
         }).catch(err => {
           console.log(err)

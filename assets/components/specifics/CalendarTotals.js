@@ -127,12 +127,15 @@ const CalendarTotals = (
                   }
                   else
                   {
-                    fechaAnterior.selected =true
-                    if(dia !== '')
+                    if(fechaAnterior.selected)
                     {
-                        let fechAnteriorOld = dataCalendar[dia];
-                        //console.log(fechAnteriorOld)
-                        fechAnteriorOld.selected = false
+                      fechaAnterior.selected =true
+                      if(dia !== '')
+                      {
+                          let fechAnteriorOld = dataCalendar[dia];
+                          //console.log(fechAnteriorOld)
+                          fechAnteriorOld.selected = false
+                      }
                     }
                   }
                                     

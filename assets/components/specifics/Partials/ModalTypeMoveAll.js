@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react'
 import { View, Modal, StyleSheet, Text, Pressable, Image, Animated } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler';
 import { formatoMoney } from '../../../utils/conversiones';
+import ModalDocumento from '../../generals/ModalDocumento';
 
 const ModalTypeMoveAll = (
     modalItem,
@@ -16,6 +17,9 @@ const ModalTypeMoveAll = (
     const [show, setShow] = useState(false); //variable para el slide
     const [animacion] = useState(new Animated.Value(0)) 
     const IVA = 0.16;
+    //Variable para nuevo modal de documento 
+    const [modalDocs, setModalDocs] = useState(false);
+    const [documento, setDocumento] = useState('');
     //Esto es para consultar los datos dependiendo que piquemos
     useEffect(() => 
     { 
@@ -185,7 +189,23 @@ const ModalTypeMoveAll = (
                                              <View style={{flexDirection:'row'}}>
                                                 <Text style={styles.intoSlide}>Comentario</Text>
                                                 <Text style={styles.itemText}>{item.comentario}</Text>
-                                             </View>  
+                                             </View>
+                                             <View>
+                                                {
+                                                     item.documento !== null ?
+                                                     <View>
+                                                        <Pressable style={{  backgroundColor:'#697FEA',  width:40,  paddingVertical:3,  paddingHorizontal:6,  borderRadius:12,  alignItems:'center'}} 
+                                                        onPress={()=> 
+                                                          {
+                                                          setModalDocs(!modalDocs)
+                                                          setDocumento(item.documento)
+                                                         }}>
+                                                           <Image source={require('../../../img/eye.png')} />
+                                                        </Pressable>
+                                                     </View>
+                                                     :null
+                                                }
+                                             </View>
                                         </Animated.View>
                                      </View>   
                                     )
@@ -223,6 +243,12 @@ const ModalTypeMoveAll = (
                                             Venta
                                         </Text>
                                     </View>
+                                    <View>
+
+                                    </View>
+                                    <View>
+
+                                    </View>
                                 </View>
                                 <FlatList 
                                   data={items}
@@ -232,13 +258,29 @@ const ModalTypeMoveAll = (
                                     return (
                                      <View style={{flexDirection:'row', justifyContent:'space-between', borderBottomColor:'#C6C6C6', borderBottomWidth:0.5, paddingVertical:15}}>
                                         <View>
-                                            <Text style={styles.itemText}>{item.nombre}</Text>
+                                            <Text style={styles.itemText,{fontSize:10}}>{item.nombre}</Text>
                                         </View>
                                         <View>
-                                            <Text style={styles.itemText}>$ {formatoMoney(item.cantidad.toFixed(2))}</Text>
+                                            <Text style={styles.itemText, {fontSize:10}}>$ {formatoMoney(item.cantidad.toFixed(2))}</Text>
                                         </View>
                                         <View>
-                                            <Text style={styles.itemText}>{item.venta}</Text>
+                                            <Text style={styles.itemText, {fontSize:10}}>{item.venta}</Text>
+                                        </View>
+                                        <View>
+                                          {
+                                            item.documento !== null ?
+                                              <View>
+                                                 <Pressable style={{  backgroundColor:'#697FEA',  width:40,  paddingVertical:3,  paddingHorizontal:6,  borderRadius:12,  alignItems:'center'}} 
+                                                 onPress={()=> 
+                                                   {
+                                                   setModalDocs(!modalDocs)
+                                                   setDocumento(item.documento)
+                                                  }}>
+                                                    <Image source={require('../../../img/eye.png')} />
+                                                 </Pressable>
+                                              </View>
+                                              :null
+                                             }
                                         </View>
                                      </View>   
                                     )
@@ -292,7 +334,20 @@ const ModalTypeMoveAll = (
                                                 <Text style={styles.itemText}>$ {formatoMoney(item.cantidad.toFixed(2))}</Text>
                                             </View>
                                             <View>
-                                              
+                                              {
+                                                item.documento !== null ?
+                                                <View>
+                                                   <Pressable style={{  backgroundColor:'#697FEA',  width:40,  paddingVertical:3,  paddingHorizontal:6,  borderRadius:12,  alignItems:'center'}} 
+                                                   onPress={()=> 
+                                                     {
+                                                     setModalDocs(!modalDocs)
+                                                     setDocumento(item.documento)
+                                                    }}>
+                                                      <Image source={require('../../../img/eye.png')} />
+                                                   </Pressable>
+                                                </View>
+                                                :null
+                                              }
                                             </View>
                                          </View>   
                                         )
@@ -346,7 +401,20 @@ const ModalTypeMoveAll = (
                                                 <Text style={styles.itemText}>$ {formatoMoney(item.cantidad.toFixed(2))}</Text>
                                             </View>
                                             <View>
-                                              
+                                            {
+                                                item.documento !== null ?
+                                                <View>
+                                                   <Pressable style={{  backgroundColor:'#697FEA',  width:40,  paddingVertical:3,  paddingHorizontal:6,  borderRadius:12,  alignItems:'center'}} 
+                                                   onPress={()=> 
+                                                     {
+                                                     setModalDocs(!modalDocs)
+                                                     setDocumento(item.documento)
+                                                    }}>
+                                                      <Image source={require('../../../img/eye.png')} />
+                                                   </Pressable>
+                                                </View>
+                                                :null
+                                              }
                                             </View>
                                          </View>   
                                         )
@@ -412,6 +480,7 @@ const ModalTypeMoveAll = (
                   </View>
               </View>
           </View>
+          <ModalDocumento modalDocs={modalDocs} setModalDocs={setModalDocs} documento={documento} />
       </Modal>
     </View>
   )
