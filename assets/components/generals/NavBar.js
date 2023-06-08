@@ -26,7 +26,7 @@ const NavBar = ({
          <Pressable  onPress={() => {
             setShow(!show)
          }}>
-           <Image source={require('../../img/icon_user.png')} />
+           <Image style={{width:40, height:40}} source={require('../../img/icon_user.png')} />
          </Pressable>
          {show ?
          <View style={styles.logout} >
