@@ -175,6 +175,7 @@ const styles = StyleSheet.create({
     titulo:{
         fontSize:25,
         color:'black',
+        fontFamily:'Montserrat-Medium'
     },
     headerCard:{
        flexDirection:'row',  

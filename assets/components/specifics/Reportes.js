@@ -15,10 +15,14 @@ const Reportes = (
       //Lineas de negocio
       lineasNegocio,
       lineaNegocio,
+      lineaNegocioName,
+      setLineaNegocioName,
       setLinea,
       //Clientes
       clientes,
       cliente,
+      clienteName,
+      setClienteName,
       setCliente,
       //Totals
       totals,
@@ -45,6 +49,8 @@ const Reportes = (
                       setYear={setYear}
                       month={month}
                       setMonth={setMonth}
+                      setClienteName={setClienteName}
+                      setLineaNegocioName={setLineaNegocioName}
                        />
         <ReporteMensual lineasNegocio={lineasNegocio} 
                         lineaNegocio={lineaNegocio} 
@@ -57,6 +63,8 @@ const Reportes = (
                         month={month}
                         setMonth={setMonth}
                         totalsMensual={totalsMensual}
+                        lineaNegocioName={lineaNegocioName}
+                        clienteName={clienteName}
                         />
     </ScrollView>
   </View>

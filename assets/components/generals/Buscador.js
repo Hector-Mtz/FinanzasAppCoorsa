@@ -42,7 +42,8 @@ const styles =  StyleSheet.create({
       borderRadius:10,
       textAlign:'left',
       width:300,
-      color:'black'
+      color:'black',
+      fontFamily:'Montserrat-Medium'
     }
 })
 

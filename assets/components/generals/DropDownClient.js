@@ -224,7 +224,7 @@ const DropDownClient = (
                       {
                         return (
                          <View style={style.contenedorItemClient}>
-                              <Text style={{color:'black'}}>
+                              <Text style={{color:'black', fontFamily:'Montserrat-Medium'}}>
                                {item.ceco + ' - ' + item.servicio}
                                </Text>
                               <View style={{flexDirection:'row', justifyContent:'space-between'}}>
@@ -290,7 +290,7 @@ const DropDownClient = (
                    </View>
                    :
                    <View>
-                      <Text>No hay registros</Text>
+                      <Text style={{fontFamily:'Montserrat-Medium'}}>No hay registros</Text>
                    </View>
                }
                 </View>
@@ -311,7 +311,7 @@ const DropDownClient = (
                         return (
                          <View style={style.contenedorItemClient}>
                             <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                              <Text style={{color:'black',textTransform:'uppercase'}} >#{item.referencia}</Text>
+                              <Text style={{color:'black',textTransform:'uppercase', fontFamily:'Montserrat-Medium'}} >#{item.referencia}</Text>
                               <ButtonWatch itemType={itemType} modalPorPagar={modalPorPagar}  setModalFacturas={setModalFacturas} setItemAMostrar={setItemAMostrar} id={item.id} />
                             </View>
                             {
@@ -393,11 +393,11 @@ const DropDownClient = (
                            {
                              return (
                               <View style={style.contenedorItemClient}>
-                                  <Text style={{color:'black'}}>
+                                  <Text style={{color:'black', fontFamily:'Montserrat-Medium'}}>
                                     #{item.nombre}
                                    </Text>
                                    <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:6}}> 
-                                      <Text style={{color:'black'}}>Cantidad: ${formatoMoney(item.cantidad.toFixed(2))}</Text>
+                                      <Text style={{color:'black', fontFamily:'Montserrat-Medium'}}>Cantidad: ${formatoMoney(item.cantidad.toFixed(2))}</Text>
                                       <View>
                                         <ButtonWatch itemType={itemType} modalPorPagar={modalPorPagar} setModalDepositos={setModalDepositos} setItemAMostrar={setItemAMostrar} id={item.id} />
                                       </View>
@@ -441,7 +441,7 @@ const DropDownClient = (
                               }
                             </View>
                             <View style={{width:25, alignItems:'center', borderWidth:0.5 , borderColor:'#C3C3C3', marginHorizontal:5}}>
-                              <Text style={{color:'black'}} >{JSON.stringify(depositos.current_page)}</Text>
+                              <Text style={{color:'black', }} >{JSON.stringify(depositos.current_page)}</Text>
                             </View>
                              <Text style={{color:'black'}}>
                                  de 
@@ -463,7 +463,7 @@ const DropDownClient = (
                      </View>
                      :
                      <View>
-                       <Text>No hay registros</Text>
+                       <Text style={{fontFamily:'Montserrat-Medium'}}>No hay registros</Text>
                      </View>
                    }
                  </View>
@@ -493,7 +493,7 @@ const style = StyleSheet.create({
       textTransform:'uppercase',
       letterSpacing:1,
       fontSize:11,
-
+      fontFamily:'Montserrat-Medium'
     },
     buttonDesplegable:
     {

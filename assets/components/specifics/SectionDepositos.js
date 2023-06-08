@@ -63,8 +63,8 @@ const SectionDepositos = () => {
                  />
         </View>
         <View style={{marginTop:5, borderTopColor:'#C6C6C6', borderTopWidth:1}}>
-           <Text style={{color:'#1D96F1', fontSize:17, marginTop:7}} >TOTAL</Text>
-           <Text style={{color:'black', fontSize:35, fontWeight:'bold'}}>
+           <Text style={{color:'#1D96F1', fontSize:17, marginTop:7, fontFamily:'Montserrat-Medium'}} >TOTAL</Text>
+           <Text style={{color:'black', fontSize:35, fontWeight:'bold', fontFamily:'Montserrat-Medium'}}>
               $ {formatoMoney(totalDepositos.toFixed(2))}
            </Text>
         </View>

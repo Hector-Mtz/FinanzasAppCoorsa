@@ -69,12 +69,12 @@ const ModalVentasPorPagar = (
                       }}>
                         <Image style={{width:10, height:20}} source={require('../../img/arrow_left.png')} />
                       </Pressable>
-                      <Text style={{color:'black', fontSize:23, marginLeft:15}}>Por pagar</Text>
+                      <Text style={{color:'black', fontSize:23, marginLeft:15, fontFamily:'Montserrat-Medium'}}>Por pagar</Text>
                   </View>
                   <Image style={{width:48, height:38}} source={require('../../img/monedas_icon.png')} />
                </View>
                <View style={{marginTop:15, flexDirection:'row', justifyContent:'space-between'}}>
-                  <Text style={{color:'black', fontSize:12}}>
+                  <Text style={{color:'black', fontSize:12, fontFamily:'Montserrat-Medium'}}>
                      Fecha inicial
                   </Text>
                   <View style={{flexDirection:'row', alignItems:'center'}}>
@@ -87,20 +87,20 @@ const ModalVentasPorPagar = (
                </View>
                <View style={styles.contenedorCantidades}>
                  <View style={[{marginLeft:10, marginRight:35}]}>
-                    <Text>Subtotal</Text>
+                    <Text style={{fontFamily:'Montserrat-Medium'}}>Subtotal</Text>
                     <View style={styles.contenedorCantidad}>
                         <Text style={styles.textCantidad}>$ {formatoMoney((venta.monto.toFixed(2)))}</Text>
                     </View>
                  </View>
                  <View >
-                    <Text>IVA</Text>
+                    <Text style={{fontFamily:'Montserrat-Medium'}}>IVA</Text>
                     <View style={styles.contenedorCantidad}>
                         <Text style={styles.textCantidad}>$ {formatoMoney(iva.toFixed(2))}</Text>
                     </View>
                  </View>
                </View>
                <View style={{marginTop:15}}>
-                  <Text>Total</Text>
+                  <Text style={{fontFamily:'Montserrat-Medium'}}>Total</Text>
                   <View style={styles.contenedorTotal}>
                      <Text style={styles.totalText} >$ {formatoMoney(total.toFixed(2))}</Text>
                   </View>
@@ -109,7 +109,7 @@ const ModalVentasPorPagar = (
                   {
                     ocs.length === 0 ?
                     <View>
-                       <Text style={{color:'black', fontWeight:'900', fontSize:20}}>- No hay OCS -</Text> 
+                       <Text style={{color:'black', fontWeight:'900', fontSize:20, fontFamily:'Montserrat-Medium'}}>- No hay OCS -</Text> 
                     </View>
                     :
                     <View>
@@ -183,7 +183,8 @@ const styles = StyleSheet.create( {
   date:
   {
     color:'black',
-    fontSize:18
+    fontSize:18,
+    fontFamily:'Montserrat-Medium'
   },
   span:{
     backgroundColor:'#1D96F1',
@@ -208,7 +209,8 @@ const styles = StyleSheet.create( {
   textCantidad:
   {
     color:'black',
-    fontSize:20
+    fontSize:20,
+    fontFamily:'Montserrat-Medium'
   },
   contenedorTotal:
   {
@@ -223,7 +225,8 @@ const styles = StyleSheet.create( {
   {
     color:'white',
     fontWeight:'900',
-    fontSize:20
+    fontSize:20,
+    fontFamily:'Montserrat-Medium'
   },
   contenedorOcs:
   {
@@ -238,7 +241,8 @@ const styles = StyleSheet.create( {
   tableRow:
   {
     color:'black', 
-    fontSize:12
+    fontSize:12,
+    fontFamily:'Montserrat-Medium'
   }
 });
 

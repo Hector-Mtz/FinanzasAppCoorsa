@@ -118,7 +118,7 @@ const Login = ({
             <View style={{marginTop:10}}>
               <TouchableWithoutFeedback onPress={()=> { Login() }} >
                   <View style={{backgroundColor:'#1D96F1', padding:15, borderRadius:15}}>
-                     <Text style={{color:'white', textAlign:'center', fontSize:15}}>Iniciar sesión</Text>
+                     <Text style={{color:'white', textAlign:'center', fontSize:15, fontFamily:'Montserrat-Medium'}}>Iniciar sesión</Text>
                   </View>
                </TouchableWithoutFeedback>
             </View>
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   },
   logo_coorsa:{
     height:25,
-    width:80
+    width:90
   },
   iconFinanzas:{
     height:140,
@@ -159,23 +159,25 @@ const styles = StyleSheet.create({
     textAlign:'center',
     color:'#1D96F1',
     fontSize:30,
-    letterSpacing:2
+    letterSpacing:2,
+    fontFamily:'Montserrat-Regular'
   },
   textoFinanzas:
   {
     textTransform:'uppercase',
     textAlign:'center',
     color:'white',
-    fontSize:40,
-    letterSpacing:10,
+    fontSize:45,
+    letterSpacing:7,
+    fontFamily:'Montserrat-Medium'
   },
   textBienvenido:
   {
     color:'white',
     textTransform:'uppercase',
-    fontSize:20,
-    letterSpacing:2,
-    marginTop:30
+    fontSize:22,
+    marginTop:30,
+    fontFamily:'Montserrat-Medium'
   },
   form:
   {

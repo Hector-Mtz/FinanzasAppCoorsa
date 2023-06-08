@@ -23,7 +23,7 @@ const ModalDepositos = (
                         }}>
                             <Image style={{width:10, height:20}} source={require('../../../img/arrow_left.png')} />
                         </Pressable>
-                        <Text style={{color:'black', fontSize:23, marginLeft:15}}>
+                        <Text style={{color:'black', fontSize:23, marginLeft:15, fontFamily:'Montserrat-Medium'}}>
                            Deposito
                         </Text>
                     </View>
@@ -31,10 +31,10 @@ const ModalDepositos = (
                 </View>
                 <View style={{flexDirection:'row', marginTop:20}}>
                     <View style={styles.contenedorReferencia}>
-                        <Text style={{color:'black', fontSize:18}}>#{modalDepositos.item.nombre}</Text>
+                        <Text style={{color:'black', fontSize:16, fontFamily:'Montserrat-Medium'}}>#{modalDepositos.item.nombre}</Text>
                     </View>
                     <View style={{marginTop:0,  justifyContent:'space-between', marginHorizontal:30}}>
-                       <Text style={{color:'black', fontSize:12}}>
+                       <Text style={{color:'black', fontSize:12, fontFamily:'Montserrat-Medium'}}>
                           Fecha de creación
                         </Text>
                      <View style={{flexDirection:'row', alignItems:'center'}}>
@@ -47,7 +47,7 @@ const ModalDepositos = (
                   </View>
                 </View>
                 <View style={{marginTop:10}}>
-                  <Text style={{fontSize:17, color:'black'}}>Total</Text>
+                  <Text style={{fontSize:17, color:'black', fontFamily:'Montserrat-Medium'}}>Total</Text>
                 </View>
                 <View style={styles.contenedorTotal}>
                   <Text style={styles.textTotal} >$ {formatoMoney(modalDepositos.item.cantidad.toFixed(2))}</Text>
@@ -137,7 +137,8 @@ const styles = StyleSheet.create({
      date:
      {
        color:'black',
-       fontSize:18
+       fontSize:18,
+       fontFamily:'Montserrat-Medium'
      },
      span:{
       backgroundColor:'#1D96F1',
@@ -157,18 +158,21 @@ const styles = StyleSheet.create({
       {
         color:'white',
         fontWeight:'900',
-        fontSize:25
+        fontSize:25,
+        fontFamily:'Montserrat-Medium'
       },
       tableHeader:{
         color:'black', 
         letterSpacing:2,
         textTransform:'uppercase',
-        textAlign:'center'
+        textAlign:'center',
+        fontFamily:'Montserrat-Medium'
       },
       tableRow:
       {
         color:'black', 
         fontSize:12,
+        fontFamily:'Montserrat-Medium'
       }
 })
 

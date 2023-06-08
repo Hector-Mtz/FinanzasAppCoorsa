@@ -23,7 +23,7 @@ const ModalDocumento = (
                       }}>
                           <Image style={{width:10, height:20}} source={require('../../img/arrow_left.png')} />
                       </Pressable>
-                      <Text style={{color:'black', fontSize:23, marginLeft:15}}>
+                      <Text style={{color:'black', fontSize:23, marginLeft:15, fontFamily:'Montserrat-Medium'}}>
                           Documento
                       </Text>
                </View>

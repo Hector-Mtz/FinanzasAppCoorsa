@@ -22,7 +22,7 @@ const SwitchButtons = (
     {
         case 0:
             Animated.timing(animacion,{
-                toValue:-118,
+                toValue:-125,
                 duration:100,
                 useNativeDriver:false
                }).start()
@@ -30,7 +30,7 @@ const SwitchButtons = (
     
         case 1:
             Animated.timing(animacion,{
-                toValue:-12,
+                toValue:-13,
                 duration:100,
                 useNativeDriver:false
                }).start()
@@ -38,7 +38,7 @@ const SwitchButtons = (
         
         case 2:
             Animated.timing(animacion,{
-                toValue:106,
+                toValue:112,
                 duration:100,
                 useNativeDriver:false
                }).start()
@@ -62,7 +62,7 @@ const SwitchButtons = (
         }} style={styles.item_slide}>
             {
                 slide.slide == 0 ?
-                <Text style={[styles.text,{color:'white', fontWeight:'bold'}]}>Todas</Text>
+                <Text style={[styles.text,{color:'white', fontWeight:'bold', fontFamily:'Montserrat-Medium'}]}>Todas</Text>
                 :
                 <Text style={styles.text}>Todas</Text>
             }
@@ -74,7 +74,7 @@ const SwitchButtons = (
         }} style={styles.item_slide}>
             {
                 slide.slide == 1 ?
-                 <Text style={[styles.text,{color:'white', fontWeight:'bold'}]}>Abiertas</Text>
+                 <Text style={[styles.text,{color:'white', fontWeight:'bold', fontFamily:'Montserrat-Medium'}]}>Abiertas</Text>
                  :
                  <Text style={styles.text}>Abiertas</Text>
             }
@@ -86,7 +86,7 @@ const SwitchButtons = (
         }} style={styles.item_slide}>
             {
                 slide.slide == 2 ?
-                 <Text style={[styles.text,{color:'white', fontWeight:'bold'}]}>Cerradas</Text>
+                 <Text style={[styles.text,{color:'white', fontWeight:'bold', fontFamily:'Montserrat-Medium'}]}>Cerradas</Text>
                 :
                 <Text style={styles.text}>Cerradas</Text>
             }
@@ -110,7 +110,8 @@ const styles = StyleSheet.create(
         text:
         {
          textTransform:'uppercase',
-         color:'black'
+         color:'black', 
+         fontFamily:'Montserrat-Medium'
         },
         slide:
         {

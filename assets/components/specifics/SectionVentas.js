@@ -131,7 +131,7 @@ const SectionVentas =
          </View>
           <View style={{flexDirection:'row', marginTop:7, alignSelf:'center'}}>
           <View style={{marginHorizontal:5}}>
-              <Text style={{color:'black', marginBottom:5}}>
+              <Text style={{color:'black', marginBottom:5, fontFamily:'Montserrat-Medium'}}>
                 Inicio
               </Text>
                  <View style={{width:150}}>
@@ -157,7 +157,7 @@ const SectionVentas =
                 }} />
           </View>
           <View style={{marginHorizontal:5}}>
-              <Text style={{color:'black', marginBottom:5}}>
+              <Text style={{color:'black', marginBottom:5, fontFamily:'Montserrat-Medium'}}>
                 Fin
               </Text>
                  <View style={{width:150}}>
@@ -184,7 +184,7 @@ const SectionVentas =
           </View>
           </View>
           <View style={{marginTop:10}}>
-            <Text style={{color:'black', marginLeft:5, marginBottom:5}}>
+            <Text style={{color:'black', marginLeft:5, marginBottom:5, fontFamily:'Montserrat-Medium'}}>
               Linea de negocio
             </Text>
             <DropdownSelect   
@@ -205,10 +205,10 @@ const SectionVentas =
                 options={lineasNegocio}
                 optionLabel={'name'}
                 optionValue={'id'}
-                checkboxLabelStyle={{ color: 'black', fontSize: 15 }}
+                checkboxLabelStyle={{ color: 'black', fontSize: 15 , fontFamily:'Montserrat-Medium'}}
                 listHeaderComponent={
                   <View style={{alignItems:'center'}}>
-                    <Text style={{color:'black', fontSize:20}} >
+                    <Text style={{color:'black', fontSize:20, fontFamily:'Montserrat-Medium'}} >
                       Lineas de negocio disponibles
                     </Text>
                    
@@ -236,8 +236,8 @@ const SectionVentas =
                />
             </View>
             <View style={{marginTop:5, borderTopColor:'#C6C6C6', borderTopWidth:1}}>
-              <Text style={{color:'#1D96F1', fontSize:17, marginTop:7}} >TOTAL</Text>
-              <Text style={{color:'black', fontSize:35, fontWeight:'bold'}}>
+              <Text style={{color:'#1D96F1', fontSize:17, marginTop:7, fontFamily:'Montserrat-Medium'}} >TOTAL</Text>
+              <Text style={{color:'black', fontSize:35, fontWeight:'bold', fontFamily:'Montserrat-Medium'}}>
                  $ {formatoMoney(total.toFixed(2))}
               </Text>
             </View>
@@ -266,7 +266,8 @@ const styles = StyleSheet.create(
        {
         marginHorizontal:20,
         marginTop:3,
-        color:'#C3C3C3'
+        color:'#C3C3C3',
+        fontFamily:'Montserrat-Medium'
        }
     }
 );

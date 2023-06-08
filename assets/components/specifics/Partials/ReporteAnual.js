@@ -16,11 +16,13 @@ const ReporteAnual = (
          //Lineas de negocio
       lineasNegocio,
       lineaNegocio,
+      setLineaNegocioName,
       setLinea,
       //Clientes
       clientes,
       cliente,
       setCliente,
+      setClienteName,
       totals,
       //fecha
       year,
@@ -30,6 +32,34 @@ const ReporteAnual = (
     }
 ) => 
 {
+
+  useEffect(() => 
+  {
+    for (let index = 0; index < lineasNegocio.length; index++) 
+    {
+      const lineaNegocioTemp = lineasNegocio[index];
+      console.log(lineaNegocioTemp)
+      if(lineaNegocioTemp.id === lineaNegocio)
+      {
+        setLineaNegocioName(lineaNegocioTemp.name)
+      }
+    }
+  },[lineaNegocio])
+
+  useEffect(() => 
+  {
+    //console.log(clientes)
+    for (let index = 0; index < clientes.length; index++) 
+    {
+      const clienteTemp = clientes[index];
+      if(clienteTemp.id === cliente)
+      {
+        //console.log('son iguales')
+        setClienteName(clienteTemp.nombre)
+      }
+    }
+  },[cliente])
+
 return (
  <View style={styles.contenedorReporte}>
     <View style={styles.contenedorTituloCalendar}>
@@ -39,7 +69,7 @@ return (
       <CalendarButton type={'anual'} year={year} setYear={setYear} month={month} setMonth={setMonth} />
     </View>
     <View style={{marginTop:10}}>
-          <Text>Líneas de negocio</Text>
+          <Text style={{color:'black', fontFamily:'Montserrat-Medium', marginBottom:5}}>Líneas de negocio</Text>
           <DropdownSelect   
             onValueChange={(itemValue) => setLinea(itemValue)}
             selectedValue={lineaNegocio}
@@ -57,11 +87,11 @@ return (
             }}
             optionLabel={'name'}
             optionValue={'id'}
-            checkboxLabelStyle={{ color: 'black', fontSize: 15 }}
+            checkboxLabelStyle={{ color: 'black', fontSize: 15, fontFamily:'Montserrat-Medium' }}
             options={lineasNegocio}
             listHeaderComponent={
               <View style={{alignItems:'center'}}>
-                <Text style={{color:'black', fontSize:20}} >
+                <Text style={{color:'black', fontSize:20, fontFamily:'Montserrat-Medium'}} >
                   Lineas de negocio disponibles
                 </Text>
                
@@ -71,7 +101,7 @@ return (
           </DropdownSelect>
     </View>
     <View>
-          <Text>Cliente</Text>
+          <Text style={{color:'black', fontFamily:'Montserrat-Medium', marginBottom:5}}>Cliente</Text>
           <DropdownSelect   
             onValueChange={(itemValue) => setCliente(itemValue)}
             selectedValue={cliente}
@@ -79,7 +109,7 @@ return (
             dropdownStyle={{
               borderWidth: 0,
               borderColor:'black',
-                 
+              color:'black', fontFamily:'Montserrat-Medium' 
             }}
             checkboxStyle={{
               backgroundColor: '#1D96F1',
@@ -89,11 +119,11 @@ return (
             }}
             optionLabel={'nombre'}
             optionValue={'id'}
-            checkboxLabelStyle={{ color: 'black', fontSize: 15 }}
+            checkboxLabelStyle={{ color: 'black', fontSize: 15,fontFamily:'Montserrat-Medium' }}
             options={clientes}
             listHeaderComponent={
               <View style={{alignItems:'center'}}>
-                <Text style={{color:'black', fontSize:20}} >
+                <Text style={{color:'black', fontSize:20,fontFamily:'Montserrat-Medium'}} >
                  Clientes disponibles
                 </Text>
                
@@ -105,19 +135,19 @@ return (
        <View style={styles.contenedorCantidades}>
          <View>
            <View style={[styles.contenedorCantidad, styles.ventas]}>
-              <Text style={{color:'white', textTransform:'uppercase'}}>Ventas</Text>
+              <Text style={{color:'white', textTransform:'uppercase', fontFamily:'Montserrat-Medium', fontSize:13}}>Ventas</Text>
               {
                 totals !== undefined ?
-                <Text style={{color:'white',marginLeft:-10, fontWeight:'bold', fontSize:14}}>${formatoMoney(totals.ventas.toFixed(2))}</Text>
+                <Text style={{color:'white',marginLeft:-10, fontWeight:'bold', fontSize:12}}>${formatoMoney(totals.ventas.toFixed(2))}</Text>
                 :
                 null
               }
            </View>
            <View style={[styles.contenedorCantidad, styles.pagar]}>
-             <Text style={{color:'white', textTransform:'uppercase'}}>Por pagar</Text>
+             <Text style={{color:'white', textTransform:'uppercase',fontFamily:'Montserrat-Medium', fontSize:13}}>Por pagar</Text>
               {
                 totals !== null ?
-                <Text style={{color:'white',marginLeft:-10, fontWeight:'bold', fontSize:14}}>${formatoMoney(totals.pp.toFixed(2))}</Text>
+                <Text style={{color:'white',marginLeft:-10, fontWeight:'bold', fontSize:12}}>${formatoMoney(totals.pp.toFixed(2))}</Text>
                 :
                 null
               }
@@ -125,19 +155,19 @@ return (
          </View>
         <View>
            <View style={[styles.contenedorCantidad, styles.cobrar]}>
-             <Text style={{color:'white', textTransform:'uppercase'}}>Por cobrar</Text>
+             <Text style={{color:'white', textTransform:'uppercase', fontFamily:'Montserrat-Medium', fontSize:12}}>Por cobrar</Text>
              {
                 totals !== null ?
-                <Text style={{color:'white',marginLeft:-10, fontWeight:'bold', fontSize:14}}>${formatoMoney(totals.pc.toFixed(2))}</Text>
+                <Text style={{color:'white',marginLeft:-10, fontWeight:'bold', fontSize:12}}>${formatoMoney(totals.pc.toFixed(2))}</Text>
                 :
                 null
               }
            </View>
            <View style={[styles.contenedorCantidad, styles.cobrado]}>
-             <Text style={{color:'white', textTransform:'uppercase'}}>Cobrado</Text>
+             <Text style={{color:'white', textTransform:'uppercase', fontFamily:'Montserrat-Medium', fontSize:13}}>Cobrado</Text>
              {
                 totals !== null ?
-                <Text style={{color:'white',marginLeft:-10, fontWeight:'bold', fontSize:14}}>${formatoMoney(totals.c.toFixed(2))}</Text>
+                <Text style={{color:'white',marginLeft:-10, fontWeight:'bold', fontSize:12}}>${formatoMoney(totals.c.toFixed(2))}</Text>
                 :
                 null
               }
@@ -154,7 +184,7 @@ const styles = StyleSheet.create({
       borderRadius:10,
       margin:10,
       padding:20, 
-      height:420
+      height:430
     },
     contenedorTituloCalendar:
     {
@@ -164,7 +194,7 @@ const styles = StyleSheet.create({
     reporteText:{
       fontSize:20,
       color:'black',
-
+      fontFamily:'Montserrat-Medium'
     },
     contenedorCantidades:
     {

@@ -161,7 +161,7 @@ const CalendarTotals = (
               {
                 selected !== '' ?
                 <View >
-                   <Text style={{color:'black', fontSize:20, textAlign:'center', fontWeight:'600'}}>
+                   <Text style={{color:'black', fontSize:20, textAlign:'center', fontWeight:'600', fontFamily:'Montserrat-Medium'}}>
                      Día seleccionado: {selected}
                    </Text>
                  <View style={styles.contenedorFecha}>
@@ -191,7 +191,7 @@ const CalendarTotals = (
                         //console.log(ventaShow)
                        }}  style={styles.contenedorIndicador}>
                          <View  style={{flexDirection:'row'}}>
-                           <Text style={styles.indicator}>PC</Text>
+                           <Text style={styles.indicator }>PC</Text>
                            <View style={[styles.span, colors.pc]}></View>
                            <View style={{marginLeft:70}}>
                               <Text style={{color:'#C6C6C6'}}> $ {formatoMoney(pcShow)} </Text>
@@ -261,7 +261,8 @@ const styles = StyleSheet.create(
       },
       fechaSeleccionada:
       {
-        fontSize: 20
+        fontSize: 20,
+        fontFamily:'Montserrat-Medium'
       },
       contenedorIndicador:{
         margin:5,
@@ -271,7 +272,8 @@ const styles = StyleSheet.create(
       },
       indicator:{
         fontSize:30,
-        color:'#C6C6C6'
+        color:'#C6C6C6',
+        fontFamily:'Montserrat-Medium'
       },
       span:{
         width:5,

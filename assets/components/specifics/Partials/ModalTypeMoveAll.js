@@ -114,7 +114,7 @@ const ModalTypeMoveAll = (
                           }}>
                               <Image style={{width:10, height:20}} source={require('../../../img/arrow_left.png')} />
                           </Pressable>
-                          <Text style={{color:'black', fontSize:23, marginLeft:15}}>
+                          <Text style={{color:'black', fontSize:23, marginLeft:15, fontFamily:'Montserrat-Medium'}}>
                               {modalItem.title}
                           </Text>
                       </View>
@@ -527,12 +527,14 @@ const styles =  StyleSheet.create(
             textTransform:'uppercase',
             marginBottom:5,
             letterSpacing:1,
-            fontWeight:'300'
+            fontWeight:'300',
+            fontFamily:'Montserrat-Medium'
           },
           tableRow:
           {
             color:'black', 
             fontSize:10,
+            fontFamily:'Montserrat-Medium'
           },
           buttonWatch:
           {
@@ -563,7 +565,8 @@ const styles =  StyleSheet.create(
           itemText:{
             color:'black',
             fontWeight:'300',
-            fontSize:13
+            fontSize:13,
+            fontFamily:'Montserrat-Medium'
           },
           contenedorText:
           {

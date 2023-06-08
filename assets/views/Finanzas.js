@@ -24,9 +24,11 @@ const Finanzas = (
     //-Lineas de negocio
     const [lineasNegocio, setLineasNegocio] = useState([])
     const [lineaNegocio, setLinea] =useState(null);
+    const [lineaNegocioName, setLineaNegocioName] = useState('')
     //-Clientes
     const [clientes, setClientes] = useState([])
     const [cliente, setCliente] = useState(null);
+    const [clienteName, setClienteName] = useState('')
     //Totals Anual
     const [totals, setTotals] =useState({"c": 0, "pc": 0, "pp": 0, "ventas": 0});
     //Totals Mensual
@@ -557,6 +559,10 @@ const Finanzas = (
                            setYear={setYear}
                            month={month}
                            setMonth={setMonth}
+                           lineaNegocioName={lineaNegocioName}
+                           setLineaNegocioName= {setLineaNegocioName}
+                           clienteName={clienteName}
+                           setClienteName={setClienteName}
                            />
                  </View> 
                 : null
@@ -597,16 +603,18 @@ const styles = StyleSheet.create({
   },
   textFinanzas:{
     color:'black',
-    marginTop:10,
+    marginTop:15,
     marginLeft:20,
     fontSize:25,
-    marginBottom:5
+    marginBottom:5,
+    fontFamily:'Montserrat-Regular'
   },
   contenedorReportes:
   {
     borderRadius:15,
     backgroundColor:'#F2F2F2',
-    marginTop:-18
+    marginTop:-20,
+    zIndex:2
   }
 })
 

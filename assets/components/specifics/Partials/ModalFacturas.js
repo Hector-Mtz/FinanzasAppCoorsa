@@ -24,7 +24,7 @@ const ModalFacturas = (
                       }}>
                         <Image style={{width:10, height:20}} source={require('../../../img/arrow_left.png')} />
                       </Pressable>
-                      <Text style={{color:'black', fontSize:23, marginLeft:15}}>
+                      <Text style={{color:'black', fontSize:23, marginLeft:15, fontFamily:'Montserrat-Medium'}}>
                         Por pagar
                       </Text>
                   </View>
@@ -50,7 +50,7 @@ const ModalFacturas = (
                   </View>
                </View>
                <View style={{marginTop:10}}>
-                  <Text style={{fontSize:17, color:'black'}}>Total</Text>
+                  <Text style={{fontSize:17, color:'black', fontFamily:'Montserrat-Medium'}}>Total</Text>
                </View>
                <View style={styles.contenedorTotal}>
                  <Text style={styles.textTotal} >$ {formatoMoney(modalFacturas.item.cantidad.toFixed(2))}</Text>
@@ -142,12 +142,14 @@ const styles = StyleSheet.create({
        color:'black',
        textAlign:'center',
        fontSize:25,
-       textTransform:'uppercase'
+       textTransform:'uppercase',
+       fontFamily:'Montserrat-Medium'
      },
      date:
      {
        color:'black',
-       fontSize:18
+       fontSize:18,
+       fontFamily:'Montserrat-Medium'
      },
      span:{
       backgroundColor:'#1D96F1',
@@ -167,18 +169,21 @@ const styles = StyleSheet.create({
     {
       color:'white',
       fontWeight:'900',
-      fontSize:25
+      fontSize:25,
+      fontFamily:'Montserrat-Medium'
     },
     tableHeader:{
       color:'black', 
       letterSpacing:2,
       textTransform:'uppercase',
-      textAlign:'center'
+      textAlign:'center',
+      fontFamily:'Montserrat-Medium'
     },
     tableRow:
     {
       color:'black', 
       fontSize:12,
+      fontFamily:'Montserrat-Medium'
     }
 })
 
