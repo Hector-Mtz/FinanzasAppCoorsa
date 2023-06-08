@@ -89,6 +89,7 @@ const DropDownClient = (
     if(item.type == 'Facturas')
     {
       //console.log(id)
+      setCliente_id(id)
       if(facturas === null)
       {
         await axios.get("https://coorsamexico-finanzas-4mklxuo4da-uc.a.run.app/api/facturasByClienteApi",
@@ -99,7 +100,7 @@ const DropDownClient = (
         })
         .then(response => {
             // Handle response
-            //console.log(facturas)
+            //console.log(response)
             //console.log(response.data);
             //setFacturas(response.data)
             setFacturas(response.data)
@@ -127,7 +128,7 @@ const DropDownClient = (
       })
       .then(response => {
           // Handle response
-          //console.log(response.data);
+          console.log(response.data);
           if(facturas == null )
           {
             setDepositos(response.data)
@@ -147,7 +148,7 @@ const DropDownClient = (
 
   const changePage = async (route) => 
   {
-    //console.log(route)
+    console.log(route)
     await axios.get(route,
     {
       params:{
