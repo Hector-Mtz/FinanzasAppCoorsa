@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     contenedor:
     {
       flexDirection:'row',
-      marginLeft:260
+      marginRight:15
     },
     text:{
       color:'white',
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
        alignItems:'center',
        justifyContent:'center',
        marginTop:35,
-       marginLeft:15
+       marginLeft:-30
     }
 })
 

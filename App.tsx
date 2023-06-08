@@ -7,6 +7,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { useNavigation } from '@react-navigation/native';
 
 import {
+  Image,
   ImageBackground,
   StyleSheet,
   Text
@@ -42,9 +43,11 @@ function App(): JSX.Element {
           headerShown:false,
         }} name='Login' component={Login}   />
         <Drawer.Screen name='Finanzas'  options={
-
           {
-            headerTitle: (props) => <NavBar  usuarioDatos={usuarioDatos} props={props} {...props} /> 
+            headerTitle:  () => (
+             <Image source={require('./assets/img/logo_coorsa.png')} />
+            ),
+            headerRight: (props) => <NavBar  usuarioDatos={usuarioDatos} props={props} {...props} /> 
           }
           
         } component={Finanzas}  />

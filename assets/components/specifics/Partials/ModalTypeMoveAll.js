@@ -200,7 +200,7 @@ const ModalTypeMoveAll = (
                                                           setModalDocs(!modalDocs)
                                                           setDocumento(item.documento)
                                                          }}>
-                                                           <Image source={require('../../../img/eye.png')} />
+                                                           <Image  style={{width:20, height:13}}  source={require('../../../img/eye.png')} />
                                                         </Pressable>
                                                      </View>
                                                      :null
@@ -276,7 +276,7 @@ const ModalTypeMoveAll = (
                                                    setModalDocs(!modalDocs)
                                                    setDocumento(item.documento)
                                                   }}>
-                                                    <Image source={require('../../../img/eye.png')} />
+                                                    <Image  style={{width:20, height:13}}  source={require('../../../img/eye.png')} />
                                                  </Pressable>
                                               </View>
                                               :null
@@ -343,7 +343,7 @@ const ModalTypeMoveAll = (
                                                      setModalDocs(!modalDocs)
                                                      setDocumento(item.documento)
                                                     }}>
-                                                      <Image source={require('../../../img/eye.png')} />
+                                                      <Image style={{width:20, height:13}} source={require('../../../img/eye.png')} />
                                                    </Pressable>
                                                 </View>
                                                 :null
@@ -410,7 +410,7 @@ const ModalTypeMoveAll = (
                                                      setModalDocs(!modalDocs)
                                                      setDocumento(item.documento)
                                                     }}>
-                                                      <Image source={require('../../../img/eye.png')} />
+                                                      <Image  style={{width:20, height:13}}  source={require('../../../img/eye.png')} />
                                                    </Pressable>
                                                 </View>
                                                 :null

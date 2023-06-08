@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     textAlign:'center',
     color:'white',
     fontSize:40,
-    letterSpacing:10
+    letterSpacing:10,
   },
   textBienvenido:
   {
