@@ -224,11 +224,11 @@ const DropDownClient = (
                       {
                         return (
                          <View style={style.contenedorItemClient}>
-                              <Text style={{color:'black', fontFamily:'Montserrat-Medium'}}>
+                              <Text style={{color:'black', fontFamily:'Montserrat-Medium', fontSize:12}}>
                                {item.ceco + ' - ' + item.servicio}
                                </Text>
                               <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                                 <Text style={{color:'black'}}>{item.fechaInicial}</Text>
+                                 <Text style={{color:'black', fontSize:12}}>{item.fechaInicial}</Text>
                                  <ButtonWatch itemType={itemType} modalPorPagar={modalPorPagar} setModalPorpagar={setModalPorpagar} setItemAMostrar={setItemAMostrar} id={item.id} />
                               </View>
                               {
@@ -485,14 +485,14 @@ const style = StyleSheet.create({
     {
       flexDirection:'row',
       justifyContent:'space-between',
-      marginVertical:2
+      marginVertical:5
     },
     text:
     {
       color:'black',
       textTransform:'uppercase',
       letterSpacing:1,
-      fontSize:11,
+      fontSize:9,
       fontFamily:'Montserrat-Medium'
     },
     buttonDesplegable:
