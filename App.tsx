@@ -27,7 +27,7 @@ function App(): JSX.Element {
   
   return (
    <NavigationContainer>
-      <Drawer.Navigator id='menu' initialRouteName='Finanzas' defaultStatus='closed'  screenOptions={{
+      <Drawer.Navigator id='menu' initialRouteName='Login' defaultStatus='closed'  screenOptions={{
        drawerStyle:{
         backgroundColor:'#0A0F2C'
        },

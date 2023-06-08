@@ -37,7 +37,7 @@ const DropDownItem = (
         case 'calendar':
             Animated.timing(
              animacion,{
-                toValue:660,
+                toValue:680,
                 duration:100,
                 useNativeDriver:false
               }
@@ -46,7 +46,7 @@ const DropDownItem = (
         case 'monedas':
           Animated.timing(
             animacion,{
-               toValue:970,
+               toValue:1070,
                duration:100,
                useNativeDriver:false
              }
@@ -55,7 +55,7 @@ const DropDownItem = (
         case 'pago' :
           Animated.timing(
             animacion,{
-               toValue:650,
+               toValue:720,
                duration:100,
                useNativeDriver:false
              }
@@ -64,7 +64,7 @@ const DropDownItem = (
         case 'deposito':
           Animated.timing(
             animacion,{
-               toValue:580,
+               toValue:610,
                duration:100,
                useNativeDriver:false
              }
