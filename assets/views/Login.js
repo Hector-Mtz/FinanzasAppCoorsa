@@ -6,9 +6,10 @@ import {
     Image,
     ImageBackground,
     View,
-    TouchableWithoutFeedback,
+    Pressable,
     TextInput,
-    Alert
+    Alert,
+    ActivityIndicator
   } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -45,13 +46,16 @@ const Login = ({
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const [clicked, setClicked] = useState(false);
     const Login = async () => //validaciones y funcion para loguear
     {
+       setClicked(true);
        if(email === '' ||  password === '')
        {
          Alert.alert('ERROR', 'Los campos son requeridos', [
           {text:'Aceptar'}
          ])
+         setClicked(false)
        }
        else
        {
@@ -66,12 +70,14 @@ const Login = ({
             //Guardamos los datos en storage
             storeEmail(email)
             storePassword(password)
+            setClicked(false)
          }).catch((error) => 
          {
             console.log(error)
             Alert.alert('ERROR', 'Las credenciales son erroneas' , [{
               text:'OK'
             }])
+            setClicked(false)
          })
        }
     }
@@ -116,11 +122,18 @@ const Login = ({
              <TextInput inputMode='email' onChangeText={(text) => {setEmail(text)}} value= {email}  style={styles.inputs} placeholder='USUARIO' placeholderTextColor={'white'} />
              <TextInput secureTextEntry={true} onChangeText={(text) => {setPassword(text)}} value= {password}  style={styles.inputs} placeholder='CONTRASEÑA' placeholderTextColor={'white'} />
             <View style={{marginTop:10}}>
-              <TouchableWithoutFeedback onPress={()=> { Login() }} >
+              <Pressable onPress={()=> { Login() }} >
                   <View style={{backgroundColor:'#1D96F1', padding:15, borderRadius:15}}>
                      <Text style={{color:'white', textAlign:'center', fontSize:15, fontFamily:'Montserrat-Medium'}}>Iniciar sesión</Text>
                   </View>
-               </TouchableWithoutFeedback>
+                  {
+                    clicked ? 
+                    <View>
+                       <ActivityIndicator size="large" color="white" style={{ transform: [{ scaleX: 0.5 }, { scaleY: 0.5 }] }} />
+                    </View>
+                    :null
+                  }
+               </Pressable>
             </View>
           </View>
         </View>
